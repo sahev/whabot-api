@@ -1,1 +1,1 @@
-# whabot-web
+# whabot-api
