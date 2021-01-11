@@ -1,0 +1,41 @@
+[1230/003155.022:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[1230/003155.024:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1230/003155.024:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[1230/011142.518:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[1230/011142.519:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[1230/011142.519:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[1231/010119.418:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0103/134456.878:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0103/134456.878:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0103/134456.878:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0103/135611.772:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0103/154120.470:ERROR:process_reader_win.cc(151)] SuspendThread: Acesso negado. (0x5)
+[0103/154120.470:ERROR:exception_snapshot_win.cc(99)] thread ID 9036 not found in process
+[0103/154120.471:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0103/162417.562:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0103/162426.873:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0103/163528.790:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0103/163528.790:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0103/163528.790:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0103/163703.269:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0103/163703.270:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0103/163703.270:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0103/170554.753:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0103/170554.753:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0103/170554.753:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0103/222749.868:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0103/222749.868:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0104/005958.939:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0104/013126.863:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0104/135246.971:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0104/135246.972:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0104/135246.972:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0104/141405.412:ERROR:process_reader_win.cc(151)] SuspendThread: Acesso negado. (0x5)
+[0104/141405.413:ERROR:exception_snapshot_win.cc(99)] thread ID 11388 not found in process
+[0104/141405.413:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0104/161312.638:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0104/161312.639:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0104/161312.639:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0111/002054.741:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0111/002054.742:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0111/002054.742:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
