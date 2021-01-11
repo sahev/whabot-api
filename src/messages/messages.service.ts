@@ -12,13 +12,4 @@ export class MessagesService {
     @InjectRepository(Messages) private messagesRepository: Repository<Messages>
   ) {}
 
-  async create(data: MessagesDTO) {}
-
-  getClient(data: any, clientName: any) {
-    let resp = [];
-    data.map((res) => {
-      if (res.session === clientName) resp = res;
-    });
-    return resp;
-  }
 }
