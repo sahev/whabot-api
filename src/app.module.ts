@@ -1,13 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
+import { SessionsModule } from './sessions/sessions.module';
 import { Users, Sessions, Messages, Bots } from './entities/index';
+import { MessagesModule } from './messages/messages.module';
 
 
 
 @Module({
   imports: [
     UsersModule,
+    SessionsModule,
+    MessagesModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',

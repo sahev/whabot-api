@@ -39,3 +39,18 @@
 [0111/002054.741:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
 [0111/002054.742:ERROR:process_info.cc(556)] ReadMemoryInfo failed
 [0111/002054.742:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0111/091556.005:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0111/091556.038:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0111/091556.038:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
+[0111/091556.038:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0111/092645.899:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0111/143912.636:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
+[0111/150224.074:ERROR:process_reader_win.cc(151)] SuspendThread: Acesso negado. (0x5)
+[0111/150224.075:ERROR:exception_snapshot_win.cc(99)] thread ID 7592 not found in process
+[0111/165655.537:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0111/165655.538:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0111/165655.538:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0111/171025.790:ERROR:process_info.cc(329)] VirtualQueryEx: Acesso negado. (0x5)
+[0111/171025.791:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0111/171025.791:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
+[0111/171025.791:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)

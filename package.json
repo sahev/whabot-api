@@ -2,7 +2,7 @@
 	"name": "whamess-bot",
 	"type": "module",
 	"scripts": {
-		"start": "tsnd --transpile-only --respawn --ignore-watch node_modules src/server.ts"
+		"start": "tsnd --transpile-only --respawn --ignore-watch node_modules src/index.ts"
 	},
 	"dependencies": {
 		"@nestjs/common": "^7.6.5",
