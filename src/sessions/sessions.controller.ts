@@ -5,6 +5,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
   HttpStatus,
   Injectable,
   Param,
@@ -44,46 +45,22 @@ export default class SessionsController {
 
   @Post("start/")
   async getQrCode(@Body() data: any) {
-    let strQrCode = {};
-    let status = {};
-    let databot = this.sessionsServices.getBot(data.botname);
-    try {
-      if ((await databot).bot_enabled) {
-        await create(
-          data.botname,
-          (qrcode) => {
-            if (qrcode) {
-              strQrCode = qrcode;
-              throw BadRequestException;
-            }
-          },
-          //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken
-          (statusSession) => {
-            switch (statusSession) {
-              case "notLogged":
-                status = "notLogged"
-                break;
-              default:
-                break;
-            }
-          },
-          { logQR: false }
-        )
-          .then((client) => this.sessionsServices.start(client))
-          .catch((error) => console.log(error));
+    let message = "";
+  
     
-          if (status === "notLogged") {
-            return strQrCode
-          }
+    let databot = this.sessionsServices.getBot(data.botname);
+
+      if ((await databot).bot_enabled) {
+        if((await databot).bot_status === "notLogged" || (await databot).bot_status === "browserClose") {
+         throw new HttpException({string: await this.sessionsServices.startBot(data.botname)}, HttpStatus.CREATED);
+        } else {
+          message = "Bot online"
+        }
+      } else {
+        message = "Bot disabled"
       }
-      return new BadRequestException(
-        "Bot disabled"
-      ).getResponse();
-    } catch {
-      return new BadRequestException(
-        "Bot not found"
-      ).getResponse();
-    }
+    throw new HttpException({ message }, HttpStatus.OK)
+
   }
 
   @Get("botstatus/:name")
@@ -93,4 +70,5 @@ export default class SessionsController {
     });
     return status;
   }
+
 }

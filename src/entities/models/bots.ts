@@ -1,5 +1,4 @@
 import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn} from "typeorm";
-import { ForeignKeyMetadata } from "typeorm/metadata/ForeignKeyMetadata";
 
 @Entity()
 export class Bots {
@@ -16,5 +15,8 @@ export class Bots {
 
     @Column()
     bot_user: string;
+
+    @Column({ default: 'notLogged' })
+    bot_status: string;
     
 }
