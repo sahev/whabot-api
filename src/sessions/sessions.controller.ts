@@ -60,7 +60,6 @@ export default class SessionsController {
         message = "Bot disabled"
       }
     throw new HttpException({ message }, HttpStatus.OK)
-
   }
 
   @Get("botstatus/:name")

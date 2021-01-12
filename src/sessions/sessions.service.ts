@@ -3,8 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { create, Whatsapp } from "venom-bot";
 import { setBotStatusDTO } from "../bots/botsDTO";
-import { Bots } from "../entities";
+import { Bots, Messages } from "../entities";
 import { saveBrowserData } from "./saveBrowserData";
+import { BotsServices }  from '../bots/bots.service'
 
 @Injectable()
 export class SessionsService {
@@ -19,11 +20,13 @@ export class SessionsService {
   start(client) {
     new saveBrowserData(client);
 
-    client.onMessage((message) => {
-      if (message.body === "Oi") {
-        client.sendText(message.from, "auto resposta");
-      }
-    });
+    new BotsServices(this.botsRepository).botInit(client);
+
+    // client.onMessage((message) => {
+    //   if (message.body === "Oi") {
+    //     client.sendText(message.from, "auto resposta");
+    //   }
+    // });
   }
 
   getClient(data: any, clientName: any) {

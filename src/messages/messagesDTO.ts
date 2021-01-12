@@ -9,3 +9,9 @@ export class MessagesDTO {
   mes_body: string
   mes_expected: string
 }
+
+export class botMessagesDTO {
+  mes_bot: number
+  mes_body: string
+  mes_expected: string
+}

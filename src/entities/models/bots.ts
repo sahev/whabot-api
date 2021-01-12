@@ -20,3 +20,10 @@ export class Bots {
     bot_status: string;
     
 }
+
+@Entity()
+export class botMessagesDTO {
+  mes_bot: number
+  mes_body: string
+  mes_expected: string
+}
