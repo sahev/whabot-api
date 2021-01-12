@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { MessagesService } from "./messages.service";
-import { MessagesDTO } from "./messagesDTO";
+import { sendMessagesDTO, MessagesDTO } from "./messagesDTO";
 import {
   BadRequestException,
   Body,
@@ -8,14 +8,19 @@ import {
   Post
 } from "@nestjs/common";
 import { saveBrowserData } from "../sessions/saveBrowserData";
+import { Messages } from '../entities/index'
 import { Utils } from '../utils'
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+
+
 
 @Controller()
 export default class MessagesController {
-  constructor(private MessagessService: MessagesService) {}
+  constructor(private messagesServices: MessagesService) { }
 
   @Post("send/")
-  async sendMessage(@Body() data: MessagesDTO) {
+  async sendMessage(@Body() data: sendMessagesDTO) {
     let response = {};
     let bot = new Utils().getBrowserData(data.client)
 
@@ -34,5 +39,11 @@ export default class MessagesController {
         "Bot not started or not found"
       ).getResponse();
     }
+  }
+
+  @Post("message/")
+  async newMessage(@Body() data: MessagesDTO) {
+    
+    return this.messagesServices.newMessage(data)
   }
 }

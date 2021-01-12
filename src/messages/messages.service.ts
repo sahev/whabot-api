@@ -12,4 +12,8 @@ export class MessagesService {
     @InjectRepository(Messages) private messagesRepository: Repository<Messages>
   ) {}
 
+  async newMessage(data: MessagesDTO) {
+    const user = await this.messagesRepository.save(data)
+    return user
+  }
 }

@@ -12,12 +12,9 @@ export class Bots {
     bot_name: string;
 
     @Column()
-    bot_enable: boolean;
+    bot_enabled: boolean;
 
     @Column()
     bot_user: string;
-
-    @Column()
-    bot_session: number;
     
 }

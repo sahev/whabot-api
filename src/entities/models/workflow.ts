@@ -1,19 +1,19 @@
 import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn} from "typeorm";
 
 @Entity()
-export class Messages {
+export class Workflow {
 
     @PrimaryGeneratedColumn()
     @PrimaryColumn()
-    mes_message: number;
+    wor_workflow: number;
 
     @Column()
-    mes_bot: number;
+    wor_name: string;
 
     @Column()
-    mes_body: string;
+    wor_type: string;
 
     @Column()
-    mes_expected: string;
+    wor_message: string;
 
-}
+} 
