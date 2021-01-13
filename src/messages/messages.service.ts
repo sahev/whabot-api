@@ -2,7 +2,7 @@ import { Injectable, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Messages } from "../entities/index";
 import { Repository } from "typeorm";
-import { botMessagesDTO, MessagesDTO } from "./messagesDTO";
+import { MessagesDTO } from "./messagesDTO";
 
 @Injectable()
 export class MessagesService {

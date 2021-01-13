@@ -1,19 +1,22 @@
-import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class Workflow {
+export class Workflows {
 
     @PrimaryGeneratedColumn()
     @PrimaryColumn()
     wor_workflow: number;
 
     @Column()
-    wor_name: string;
+    wor_user: number;
 
     @Column()
-    wor_type: string;
+    wor_bot: number;
 
     @Column()
-    wor_message: string;
+    wor_stage: number;
+    
+    @Column()
+    wor_cart: string
 
 } 

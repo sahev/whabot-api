@@ -2,9 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { SessionsModule } from './sessions/sessions.module';
-import { Users, Sessions, Messages, Bots, Workflow } from './entities/index';
+import { Users, Sessions, Messages, Bots, Workflows, Products, Carts } from './entities/index';
 import { MessagesModule } from './messages/messages.module';
 import { BotsModule } from './bots/bots.module';
+import { ProductsModule } from './products/products.module'
+import { WorkflowsModule } from './workflows/workflows.module'
+import { CartsModule } from './workflows/cart/cart.module'
 
 
 
@@ -14,6 +17,9 @@ import { BotsModule } from './bots/bots.module';
     SessionsModule,
     MessagesModule,
     BotsModule,
+    ProductsModule,
+    WorkflowsModule,
+    CartsModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -21,7 +27,7 @@ import { BotsModule } from './bots/bots.module';
       username: 'root',
       password: 'root',
       database: 'whabot',
-      entities: [Users, Sessions, Messages, Bots, Workflow],
+      entities: [Users, Sessions, Messages, Bots, WorkflowsModule, Products, Workflows, Carts],
       synchronize: true,
       migrations: ["src/database/migrations/*.ts"],
       cli: {

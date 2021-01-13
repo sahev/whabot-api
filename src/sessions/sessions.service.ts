@@ -1,32 +1,25 @@
 import { Injectable, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Connection, Repository } from "typeorm";
 import { create, Whatsapp } from "venom-bot";
 import { setBotStatusDTO } from "../bots/botsDTO";
-import { Bots, Messages } from "../entities";
+import { Bots, Carts, Messages, Products, Workflows } from "../entities";
 import { saveBrowserData } from "./saveBrowserData";
 import { BotsServices }  from '../bots/bots.service'
 
 @Injectable()
 export class SessionsService {
   constructor(
-    @InjectRepository(Bots) public botsRepository: Repository<Bots>
+    // private readonly connection: Connection,
+    @InjectRepository(Bots) public botsRepository: Repository<Bots>,
+    @InjectRepository(Products) public productsRepository: Repository<Products>,
+    @InjectRepository(Workflows) public workflowsRepository: Repository<Workflows>,
+    @InjectRepository(Carts) private CartsRepository: Repository<Carts>
+    
   ) {}
 
   async getSessionTokenBrowser(data: any) {
     return new Whatsapp(data).getSessionTokenBrowser();
-  }
-
-  start(client) {
-    new saveBrowserData(client);
-
-    new BotsServices(this.botsRepository).botInit(client);
-
-    // client.onMessage((message) => {
-    //   if (message.body === "Oi") {
-    //     client.sendText(message.from, "auto resposta");
-    //   }
-    // });
   }
 
   getClient(data: any, clientName: any) {
@@ -70,5 +63,17 @@ export class SessionsService {
     if (status === "notLogged") {
       return strQrCode;
     }
+  }
+
+  start(client) {
+    new saveBrowserData(client);
+
+    new BotsServices(this.botsRepository, this.productsRepository, this.workflowsRepository, this.CartsRepository).botInit(client);
+
+    // client.onMessage((message) => {
+    //   if (message.body === "Oi") {
+    //     client.sendText(message.from, "auto resposta");
+    //   }
+    // });
   }
 }
