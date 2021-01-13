@@ -17,7 +17,7 @@ export class MessagesService {
     return user
   }
 
-  async getMessages(): Promise<Messages[]> {
-    return this.messagesRepository.find();
+  async getMessagesType(data: string) {
+    return await this.messagesRepository.findOne({ mes_type: data}) 
   }
 }

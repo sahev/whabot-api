@@ -25,7 +25,8 @@ export class BotsServices {
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
     @InjectRepository(Products) public productsRepository: Repository<Products>,
     @InjectRepository(Workflows) public workflowsRepository: Repository<Workflows>,
-    @InjectRepository(Carts) public cartsRepository: Repository<Carts>
+    @InjectRepository(Carts) public cartsRepository: Repository<Carts>,
+    @InjectRepository(Messages) public messagesRepository: Repository<Messages>
   ) {
       // this.workflowsRepository = this.connection.getRepository(Workflows);
   }
@@ -58,8 +59,12 @@ export class BotsServices {
   async botInit(client) {
 
      client.onMessage(async (message) => {
-      let res = await new WorkflowsServices(this.workflowsRepository, this.productsRepository, this.cartsRepository).getInitials((await this.getBotId(client.session)), message);
-      client.sendText(message.from, res);
+      let res = await new WorkflowsServices(this.workflowsRepository, this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message);
+
+      for (let i = 0; i < res.length; i++) {
+        const reply = res[i];
+        client.sendText(message.from, reply);
+      }
 
       // const expected = await getManager()
       // .createQueryBuilder(Messages, "messages")

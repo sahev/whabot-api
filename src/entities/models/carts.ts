@@ -1,16 +1,17 @@
-import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, ManyToOne} from "typeorm";
+import { Products } from './products'
 
 @Entity()
 export class Carts {
-
     @PrimaryGeneratedColumn()
     @PrimaryColumn()
     car_cart: number;
 
+    @ManyToOne(() => Products, (products) => products.pro_product)
     @Column()
-    car_items: string;
+    public car_product: number;
 
     @Column()
-    car_user: number;
+    car_user: string;
     
 }

@@ -27,6 +27,6 @@ export default class ProductsController {
 
   @Get("products")
   async getInitials() {
-    return this.productsServices.getInitials();
+    // return this.productsServices.getInitials();
   }
 }

@@ -1,4 +1,5 @@
-import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, EntityRepository} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, EntityRepository, OneToMany} from "typeorm";
+import { Carts } from "..";
 
 @EntityRepository()
 @Entity()
@@ -6,12 +7,13 @@ export class Products {
 
     @PrimaryGeneratedColumn()
     @PrimaryColumn()
-    pro_product: number;
+    @OneToMany(() => Carts, (cart) => cart.car_product)
+    public pro_product: number;
 
     @Column()
-    pro_name: string;
+    public pro_name: string;
 
-    @Column()
-    pro_price: string;
+    @Column("decimal", { precision: 10, scale: 2 })
+    public pro_price: number;
 
 }

@@ -14,6 +14,9 @@ export class Messages {
     mes_body: string;
 
     @Column()
-    mes_expected: string;
+    mes_stage: number;
+
+    @Column()
+    mes_type: string;
 
 }

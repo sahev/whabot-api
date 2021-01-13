@@ -8,7 +8,7 @@ export class Workflows {
     wor_workflow: number;
 
     @Column()
-    wor_user: number;
+    wor_user: string;
 
     @Column()
     wor_bot: number;

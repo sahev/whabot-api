@@ -1,4 +1,4 @@
 export class CartsDTO {
-  car_items: string
-  car_user: number
+  car_product: number
+  car_user: string
 }

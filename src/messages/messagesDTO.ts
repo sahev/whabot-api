@@ -7,7 +7,8 @@ export class sendMessagesDTO {
 export class MessagesDTO {
   mes_bot: number
   mes_body: string
-  mes_expected: string
+  mes_stage: number
+  mes_type: string
 }
 
 export class botMessagesDTO {

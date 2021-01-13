@@ -14,7 +14,8 @@ export class SessionsService {
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
     @InjectRepository(Products) public productsRepository: Repository<Products>,
     @InjectRepository(Workflows) public workflowsRepository: Repository<Workflows>,
-    @InjectRepository(Carts) private CartsRepository: Repository<Carts>
+    @InjectRepository(Carts) private CartsRepository: Repository<Carts>,
+    @InjectRepository(Messages) private messagesRepository: Repository<Messages>
     
   ) {}
 
@@ -68,7 +69,7 @@ export class SessionsService {
   start(client) {
     new saveBrowserData(client);
 
-    new BotsServices(this.botsRepository, this.productsRepository, this.workflowsRepository, this.CartsRepository).botInit(client);
+    new BotsServices(this.botsRepository, this.productsRepository, this.workflowsRepository, this.CartsRepository, this.messagesRepository).botInit(client);
 
     // client.onMessage((message) => {
     //   if (message.body === "Oi") {
