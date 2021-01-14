@@ -21,16 +21,18 @@ export class CartsService {
     let cart = "";
     let tot = 0;
     
-    const cartitems = await getRepository(Products).find({relations: ['pro_product']});
-    console.log(cartitems);
+    const cartitems = await getRepository(Carts).find({where: {car_user: data}, relations: ['car_product']});
 
     cartitems.forEach(res => {
-      cart += `${res.pro_product} - ${res.pro_name}        R$ ${res.pro_price} \n`;
+      const {car_product} = res
+      cart += `${car_product.pro_product} - ${car_product.pro_name}        R$ ${car_product.pro_price} \n`;
       
-      tot += res.pro_price;
+      tot += parseFloat(car_product.pro_price);
+      console.log(cart, tot);
+
     });
     cart+= "----------------\n"
-    cart+= `Total de R$${tot}`
+    cart+= `Total de R$${tot.toFixed(2)}`
     
     return cart
   }
