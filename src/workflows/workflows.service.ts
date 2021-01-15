@@ -137,7 +137,7 @@ export class WorkflowsServices {
         ];
     }
 
-    console.log("produto adicionado");
+    console.log("produto adicionado"); 
 
     return [
       `${itemName} ` + (await this.getMessagesType("addsuccess"))
