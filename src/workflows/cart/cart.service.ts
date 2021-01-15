@@ -13,7 +13,11 @@ export class CartsService {
   ) {}
 
   async addItem(data: CartsDTO) {
-    return this.CartsRepository.save(data)
+    
+    let e = await  this.CartsRepository.save(data)
+    console.log("add item",e);
+    
+    return e
   }
 
   async getCart(data: string) {
@@ -24,16 +28,21 @@ export class CartsService {
     const cartitems = await getRepository(Carts).find({where: {car_user: data}, relations: ['car_product']});
 
     cartitems.forEach(res => {
-      const {car_product} = res
-      cart += `${car_product.pro_product} - ${car_product.pro_name}        R$ ${car_product.pro_price} \n`;
+      const { pro_product, pro_name, pro_price } = JSON.parse(JSON.stringify(res.car_product))
+      cart += `${pro_product} - ${pro_name}        R$ ${pro_price} \n`;
       
-      tot += parseFloat(car_product.pro_price);
-      console.log(cart, tot);
+      tot += parseFloat(pro_price);
 
     });
-    cart+= "----------------\n"
+    cart+= "--------------------\n"
     cart+= `Total de R$${tot.toFixed(2)}`
     
     return cart
   }
+
+  async deleteCart(data) {
+    let e = await this.CartsRepository.delete({ car_user: data })
+    return e
+  }
+
 }

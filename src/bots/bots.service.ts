@@ -11,24 +11,13 @@ import { ProductsServices } from "../products/products.service";
 @Injectable()
 export class BotsServices {
 
-  // @InjectRepository(Products) public productsRepository: Repository<Products>
-
-  // @InjectRepository(Workflows) public workflowsRepository: Repository<Workflows>
-  // constructor(
-  //   @InjectRepository(Bots) public botsRepository: Repository<Bots>
-  // ) {}
-
-  // public workflowsRepository: any;
-
   constructor(
-    // private readonly connection: Connection
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
     @InjectRepository(Products) public productsRepository: Repository<Products>,
     @InjectRepository(Workflows) public workflowsRepository: Repository<Workflows>,
     @InjectRepository(Carts) public cartsRepository: Repository<Carts>,
     @InjectRepository(Messages) public messagesRepository: Repository<Messages>
   ) {
-      // this.workflowsRepository = this.connection.getRepository(Workflows);
   }
 
   async getBot(data) {
@@ -59,24 +48,14 @@ export class BotsServices {
   async botInit(client) {
 
      client.onMessage(async (message) => {
-      let res = await new WorkflowsServices(this.workflowsRepository, this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message);
-
-      for (let i = 0; i < res.length; i++) {
-        const reply = res[i];
-        client.sendText(message.from, reply);
+      let res = await new WorkflowsServices(this.workflowsRepository, this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
+        
+      if (!message.isGroupMsg) {
+        for (let i = 0; i < res.length; i++) {
+          const reply = res[i];
+          client.sendText(message.from, reply);
+        }
       }
-
-      // const expected = await getManager()
-      // .createQueryBuilder(Messages, "messages")
-      // .where("mes_expected = :data", { data: message.body })
-      // .getOne();
-
-      // try {
-      //   if (message.body === expected.mes_expected) {
-      //     client.sendText(message.from, expected.mes_body);
-      //   }
-      // } catch {}
-
     });
   }
 

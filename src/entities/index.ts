@@ -6,5 +6,6 @@ import { Workflows } from './models/workflow'
 import { Products } from './models/products'
 import { Carts } from './models/carts'
 import { Chats } from './models/chats'
+import { Customers } from './models/customers'
 
-export { Users, Bots, Messages, Sessions, Workflows, Products, Carts, Chats }
+export { Users, Bots, Messages, Sessions, Workflows, Products, Carts, Chats, Customers }

@@ -13,10 +13,13 @@ export class Messages {
     @Column()
     mes_body: string;
 
-    @Column()
-    mes_stage: number;
+    @Column({default: null})
+    mes_options: string;
 
     @Column()
     mes_type: string;
+
+    @Column({default: null})
+    mes_shortcut: string;
 
 }

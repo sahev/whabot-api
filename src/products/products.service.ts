@@ -21,9 +21,20 @@ export class ProductsServices {
     return this.productsRepository.save(data)
   }
 
-  async getInitials(data: any, user?: any) {
-
+  async listProducts() {
     let products = "";
+    let items = await this.productsRepository.find();    
+    items.forEach(res => {
+      products += `${res.pro_product} - ${res.pro_name}        R$ ${res.pro_price} \n`;
+      
+    });
+    return products
+  }
+
+
+  async getInitials(wor_workflow: any, wor_bot: any, wor_user: any) {
+
+    let products = "Esse é o nosso estoque:\n";
 
     let items = await this.productsRepository.find();    
 
@@ -32,9 +43,9 @@ export class ProductsServices {
     });
     
     await this.setStage({
-      wor_workflow: user.wor_workflow, 
-      wor_bot: user.wor_bot,
-      wor_user: user.wor_user, 
+      wor_workflow, 
+      wor_bot,
+      wor_user, 
       wor_stage: 1, 
       wor_cart: ""
     })
