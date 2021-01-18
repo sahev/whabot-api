@@ -106,3 +106,4 @@
 [0114/214509.767:ERROR:process_info.cc(556)] ReadMemoryInfo failed
 [0114/214509.767:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
 [0114/214509.767:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentou-se acessar um processo de saída. (0xc000010a)
+[0114/234100.395:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não pode encontrar o caminho especificado. (0x3)
