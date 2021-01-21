@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { UsersDTO } from './usersDTO';
 
 @Injectable()
-export class UsersService {
+export class UsersService { 
   private readonly users: Users[];
 
   constructor(
