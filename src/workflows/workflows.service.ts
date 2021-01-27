@@ -122,12 +122,39 @@ export class WorkflowsServices {
         console.log("listar produtos estagio 2", shortcut);
         return [await this.listProducts(), await this.getMessagesType("step")];
       }
+      
+      await products.map(async (res) => {
+        if (res.pro_product === parseInt(body)) {
+          this.addItem({
+            product: res.pro_product,
+            user: from,
+          });
+          console.log("adiciona produto", res.pro_product, from);
+          itemName = res.pro_name;
+        }
+      });
 
-      if (body.includes("rua")) {
-        console.log("tem rua");
-        return
-      } else console.log("não tem rua");
-      return
+      if (shortcut === "steporder") {
+        console.log("listar carrinho estagio 1", shortcut);
+        return [
+          await this.getMessagesType("listcart"),
+          await this.getCart(from),
+        ];
+      }
+
+      if (itemName === "" ) {
+        return [
+          await this.getMessagesType("error"),
+          await this.getMessagesType("help"),
+        ];
+    }
+
+      console.log("produto adicionado"); 
+ 
+      return [
+        `${itemName} ` + (await this.getMessagesType("addsuccess"))
+      ];
+
     }
 
     if (itemName === "" ) {
@@ -136,6 +163,7 @@ export class WorkflowsServices {
           await this.getMessagesType("help"),
         ];
     }
+    
 
     console.log("produto adicionado"); 
  
