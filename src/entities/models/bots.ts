@@ -10,7 +10,7 @@ export class Bots {
     @Column()
     bot_name: string;
 
-    @Column()
+    @Column({ default: false })
     bot_enabled: boolean;
 
     @Column()
@@ -18,6 +18,15 @@ export class Bots {
 
     @Column({ default: 'notLogged' })
     bot_status: string;
+
+    @Column()
+    bot_description: string;
+
+    @Column()
+    bot_type: string;
+
+    @Column()
+    bot_model: string;
     
 }
 

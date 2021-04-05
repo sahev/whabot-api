@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { BotsServices } from "./bots.service";
-import { Body, Controller, Param, Patch, Post}  from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Query}  from "@nestjs/common";
+import { identity } from "rxjs";
+import { getBotsDTO } from "./botsDTO";
 
 @Controller()
 export default class BotsController {
@@ -16,4 +18,8 @@ export default class BotsController {
     return this.botsServices.alterBot(data, botname)
   }
 
+  @Get('bots/')
+  getBots(@Query() data) {
+    return this.botsServices.getBots(data)
+  }
 }

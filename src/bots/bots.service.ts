@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Connection, getConnection, getManager, getRepository, Repository } from "typeorm";
 import { Bots, Carts, Messages, Products, Workflows } from "../entities/index";
-import { addBotsDTO, alterBotsDTO } from "./botsDTO";
+import { addBotsDTO, alterBotsDTO, getBotsDTO } from "./botsDTO";
 import { MessagesService } from "../messages/messages.service";
 import { botMessagesDTO } from "../entities/models/bots";
 import { WorkflowsServices } from "../workflows/workflows.service"
@@ -22,6 +22,10 @@ export class BotsServices {
 
   async getBot(data) {
     this.botsRepository.findOne({ bot_name: data });
+  }
+
+  async getBots(data: getBotsDTO) {
+    return this.botsRepository.find({ bot_user: data.bot_user });
   }
 
   async newBot(data: addBotsDTO) {
