@@ -1,8 +1,8 @@
-export class saveBrowserData {
+export class BrowserData {
   static dataBrowser: any = [];
 
   constructor(data: object) {
-    saveBrowserData.dataBrowser.push(data);
+    BrowserData.dataBrowser.push(data);
   }
 
   getDataBrowser(data: any, clientName: any) {

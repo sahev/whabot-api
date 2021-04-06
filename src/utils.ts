@@ -1,9 +1,7 @@
-import { saveBrowserData } from "./sessions/saveBrowserData";
+import { BrowserData } from "./sessions/BrowserData";
 
 export class Utils {
-  getBrowserData(data: string) {
-    console.log('aqui');
-    
-    return new saveBrowserData(saveBrowserData.dataBrowser).getDataBrowser(saveBrowserData.dataBrowser, data)
+  getBrowserData(data: string) {    
+    return new BrowserData(BrowserData.dataBrowser).getDataBrowser(BrowserData.dataBrowser, data)
   }
 }

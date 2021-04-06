@@ -7,7 +7,7 @@ import {
   Controller,
   Post
 } from "@nestjs/common";
-import { saveBrowserData } from "../sessions/saveBrowserData";
+import { BrowserData } from "../sessions/BrowserData";
 import { Messages } from '../entities/index'
 import { Utils } from '../utils'
 import { InjectRepository } from "@nestjs/typeorm";

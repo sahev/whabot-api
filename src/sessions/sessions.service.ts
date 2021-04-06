@@ -4,8 +4,10 @@ import { Connection, Repository } from "typeorm";
 import { create, Whatsapp } from "venom-bot";
 import { setBotStatusDTO } from "../bots/botsDTO";
 import { Bots, Carts, Messages, Products, Workflows } from "../entities";
-import { saveBrowserData } from "./saveBrowserData";
+import { BrowserData } from "./BrowserData";
 import { BotsServices }  from '../bots/bots.service'
+import { Utils } from "../utils";
+
 
 @Injectable()
 export class SessionsService {
@@ -21,6 +23,15 @@ export class SessionsService {
 
   async getSessionTokenBrowser(data: any) {
     return new Whatsapp(data).getSessionTokenBrowser();
+  }
+
+  async logout(clientId) {
+    let p = BrowserData.dataBrowser
+
+    p.map(page => {
+      if (page.session == clientId)
+        page.close();
+    })
   }
 
   getClient(data: any, clientName: any) {
@@ -87,7 +98,7 @@ export class SessionsService {
   }
 
   start(client) {
-    new saveBrowserData(client);
+    new BrowserData(client);
 
     new BotsServices(this.botsRepository, this.productsRepository, this.workflowsRepository, this.CartsRepository, this.messagesRepository).botInit(client);
 

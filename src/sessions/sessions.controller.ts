@@ -12,7 +12,7 @@ import {
   Post,
   Res,
 } from "@nestjs/common";
-import { saveBrowserData } from "./saveBrowserData";
+import { BrowserData } from "./BrowserData";
 import { create } from "venom-bot";
 import { Utils } from "../utils";
 
@@ -20,6 +20,11 @@ import { Utils } from "../utils";
 @Injectable()
 export default class SessionsController {
   constructor(private sessionsServices: SessionsService) {}
+
+  @Post("logout/:id")
+  async logout(@Param("id") id: string) {
+    await this.sessionsServices.logout(id)
+  }
 
   @Get("gettoken/:name")
   async getTokenBrowser(@Param("name") data: string) {
@@ -41,6 +46,7 @@ export default class SessionsController {
         "Bot not started or not found"
       ).getResponse();
     }
+
   }
 
   @Post("start/")
@@ -69,11 +75,13 @@ export default class SessionsController {
     
   }
 
-  @Get("botstatus/:name")
-  getBotStatus(@Param("name") name: string) {
-    var status = saveBrowserData.dataBrowser.some((bot) => {
-      return bot.session === name;
+  @Get("botstatus/:botId")
+  async getBotStatus(@Param("botId") botId: string) {
+    var status = BrowserData.dataBrowser.some((bot) => {
+      return bot.session === botId;
     });
+    if (!status) 
+      await this.sessionsServices.setBotStatus(parseInt(botId), { bot_status: "notLogged" });
     return status;
   }
 

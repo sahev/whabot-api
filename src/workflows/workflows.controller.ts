@@ -2,7 +2,7 @@
 import { WorkflowsServices } from "./workflows.service";
 import { WorkflowsDTO } from "./workflowsDTO";
 import { Body, Controller, Get, Post } from "@nestjs/common";
-import { saveBrowserData } from "../sessions/saveBrowserData";
+import { BrowserData } from "../sessions/BrowserData";
 import { Workflows } from '../entities/index'
 import { Utils } from '../utils'
 import { InjectRepository } from "@nestjs/typeorm";
