@@ -31,35 +31,55 @@ export class SessionsService {
     return resp;
   }
 
-  getBot(data: string) {
-    return this.botsRepository.findOne({ bot_name: data });
+  async getBot(botId: number) {
+    return this.botsRepository.findOne({ bot_bot: botId });
   }
 
-  async setBotStatus(botname: string, data: setBotStatusDTO) {
-    await this.botsRepository.update({ bot_name: botname }, data);
+  async setBotStatus(botId: number, data: setBotStatusDTO) {
+    await this.botsRepository.update({ bot_bot: botId }, data);
   }
 
-  async startBot(botname) {
+  async startBot(botId) {
     let strQrCode = "";
     let status = '';
 
+
+    
     await create(
-      botname,
+      botId.toString(),
       (qrcode) => {
         if (qrcode) {
+          new BotsServices(this.botsRepository, this.productsRepository, this.workflowsRepository, this.CartsRepository, this.messagesRepository).setQrCodeByBot( { bot_qrcode: qrcode} , botId)
           strQrCode = qrcode;
           throw BadRequestException;
         }
       },
-      //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat
+      //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
       async (statusSession) => {
         status = statusSession;
-        await this.setBotStatus(botname, { bot_status: statusSession });
+        await this.setBotStatus(botId, { bot_status: statusSession });
       },
       { logQR: false }
     )
       .then((client) => this.start(client))
       .catch((error) => console.log(error));
+
+
+// function start(client) {
+//   client.onMessage((message) => {
+//     if (message.body === 'Hi' && message.isGroupMsg === false) {
+//       client
+//         .sendText(message.from, 'Welcome Venom 🕷')
+//         .then((result) => {
+//           console.log('Result: ', result); //return object success
+//         })
+//         .catch((erro) => {
+//           console.error('Error when sending: ', erro); //return object error
+//         });
+//     }
+//   });
+// }
+
 
     if (status === "notLogged") {
       return strQrCode;

@@ -5,6 +5,7 @@ export class addBotsDTO {
   bot_description: string
   bot_type: string
   bot_model: string
+  bot_qrcode: string
 }
 
 export class alterBotsDTO {
@@ -18,4 +19,9 @@ export class setBotStatusDTO {
 
 export class getBotsDTO {
   bot_user: string
+}
+
+export class setBotQrCode {
+  bot_bot: number
+  bot_qrcode: string
 }

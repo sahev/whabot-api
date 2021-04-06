@@ -15,7 +15,7 @@
 		"rxjs": "^6.6.3",
 		"typeorm": "^0.2.29",
 		"venom": "^0.1.0",
-		"venom-bot": "^2.2.3"
+		"venom-bot": "^3.0.13"
 	},
 	"devDependencies": {
 		"ts-node-dev": "^1.1.1",

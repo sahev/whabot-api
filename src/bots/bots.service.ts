@@ -49,6 +49,13 @@ export class BotsServices {
     });
   }
 
+  async setQrCodeByBot(data: any, botId: number) {
+    await this.botsRepository.update({ bot_bot: botId }, data);
+    return await this.botsRepository.findOne({
+      bot_bot: botId,
+    });
+  }
+
   async botInit(client) {
 
      client.onMessage(async (message) => {

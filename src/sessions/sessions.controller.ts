@@ -48,18 +48,25 @@ export default class SessionsController {
     let message = "";
   
     
-    let databot = this.sessionsServices.getBot(data.botname);
+    let databot = await this.sessionsServices.getBot(data.botId);
 
-      if ((await databot).bot_enabled) {
-        if((await databot).bot_status === "notLogged" || (await databot).bot_status === "browserClose") {
-         throw new HttpException({string: await this.sessionsServices.startBot(data.botname)}, HttpStatus.CREATED);
+    if(databot) {
+      if (databot.bot_enabled) {
+        if(databot.bot_status === "notLogged" || databot.bot_status === "browserClose" || databot.bot_status === "autocloseCalled" ) {
+         throw new HttpException({string: await this.sessionsServices.startBot(data.botId)}, HttpStatus.CREATED);
         } else {
           message = "Bot online"
         }
       } else {
         message = "Bot disabled"
       }
+    } else {
+      message = "Bot not found"
+    }
+
     throw new HttpException({ message }, HttpStatus.OK)
+
+    
   }
 
   @Get("botstatus/:name")
