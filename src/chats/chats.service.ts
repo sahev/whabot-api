@@ -50,6 +50,7 @@ export class ChatsServices {
 
     let r = this.chatsRepository
       .createQueryBuilder("chats")
+      .where('cha_user = :user', { user: id } )
       .select(["cha_chat", "cha_user"])
       .getRawMany(); // or .getMany()
 

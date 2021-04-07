@@ -28,7 +28,7 @@ export class Bots {
     @Column()
     bot_model: string;
 
-    @Column({ type: "blob" })
+    @Column({ type: "blob" , default: null})
     bot_qrcode: string;
 
 }

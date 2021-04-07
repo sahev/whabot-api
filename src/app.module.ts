@@ -6,7 +6,7 @@ import { Users, Sessions, Messages, Bots, Chats } from './entities/index';
 import { MessagesModule } from './messages/messages.module';
 import { BotsModule } from './bots/bots.module';
 import { ChatsModule } from './chats/chats.module';
-import { AppGatewayModule } from './socket/socket.module';
+import { GatewayModule } from './socket/socket.module';
 
 
 
@@ -17,7 +17,7 @@ import { AppGatewayModule } from './socket/socket.module';
     MessagesModule,
     BotsModule,
     ChatsModule,
-    AppGatewayModule,
+    GatewayModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
