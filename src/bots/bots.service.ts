@@ -1,21 +1,15 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Connection, getConnection, getManager, getRepository, Repository } from "typeorm";
-import { Bots, Carts, Messages, Products, Workflows } from "../entities/index";
+import { getManager, Repository } from "typeorm";
+import { Whatsapp } from "venom-bot";
+import { Bots, Messages } from "../entities/index";
 import { addBotsDTO, alterBotsDTO, getBotsDTO } from "./botsDTO";
-import { MessagesService } from "../messages/messages.service";
-import { botMessagesDTO } from "../entities/models/bots";
-import { WorkflowsServices } from "../workflows/workflows.service"
-import { ProductsServices } from "../products/products.service";
 
 @Injectable()
 export class BotsServices {
 
   constructor(
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
-    @InjectRepository(Products) public productsRepository: Repository<Products>,
-    @InjectRepository(Workflows) public workflowsRepository: Repository<Workflows>,
-    @InjectRepository(Carts) public cartsRepository: Repository<Carts>,
     @InjectRepository(Messages) public messagesRepository: Repository<Messages>
   ) {
   }
@@ -58,14 +52,18 @@ export class BotsServices {
 
   async botInit(client) {
 
+   
+
      client.onMessage(async (message) => {
-      let res = await new WorkflowsServices(this.workflowsRepository, this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
+      // let res = await new WorkflowsServices(this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
         
       if (!message.isGroupMsg) {
-        for (let i = 0; i < res.length; i++) {
-          const reply = res[i];
-          client.sendText(message.from, reply);
-        }
+        console.log(message.from);
+        
+        // for (let i = 0; i < res.length; i++) {
+        //   const reply = res[i];
+        //   client.sendText(message.from, reply);
+        // }
       }
     });
   }

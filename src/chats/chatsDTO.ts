@@ -1,4 +1,4 @@
-export class addBotsDTO {
+export class addChatsDTO {
   cha_chat: number
   cha_stage: string
   cha_cart: string

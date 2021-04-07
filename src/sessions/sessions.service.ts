@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Connection, Repository } from "typeorm";
 import { create, Whatsapp } from "venom-bot";
 import { setBotStatusDTO } from "../bots/botsDTO";
-import { Bots, Carts, Messages, Products, Workflows } from "../entities";
+import { Bots, Messages } from "../entities";
 import { BrowserData } from "./BrowserData";
 import { BotsServices }  from '../bots/bots.service'
 import { Utils } from "../utils";
@@ -14,9 +14,6 @@ export class SessionsService {
   constructor(
     // private readonly connection: Connection,
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
-    @InjectRepository(Products) public productsRepository: Repository<Products>,
-    @InjectRepository(Workflows) public workflowsRepository: Repository<Workflows>,
-    @InjectRepository(Carts) private CartsRepository: Repository<Carts>,
     @InjectRepository(Messages) private messagesRepository: Repository<Messages>
     
   ) {}
@@ -60,7 +57,7 @@ export class SessionsService {
       botId.toString(),
       (qrcode) => {
         if (qrcode) {
-          new BotsServices(this.botsRepository, this.productsRepository, this.workflowsRepository, this.CartsRepository, this.messagesRepository).setQrCodeByBot( { bot_qrcode: qrcode} , botId)
+          new BotsServices(this.botsRepository, this.messagesRepository).setQrCodeByBot( { bot_qrcode: qrcode} , botId)
           strQrCode = qrcode;
           throw BadRequestException;
         }
@@ -68,29 +65,14 @@ export class SessionsService {
       //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
       async (statusSession) => {
         status = statusSession;
+        console.log('status', status);
+        
         await this.setBotStatus(botId, { bot_status: statusSession });
       },
       { logQR: false }
     )
       .then((client) => this.start(client))
       .catch((error) => console.log(error));
-
-
-// function start(client) {
-//   client.onMessage((message) => {
-//     if (message.body === 'Hi' && message.isGroupMsg === false) {
-//       client
-//         .sendText(message.from, 'Welcome Venom 🕷')
-//         .then((result) => {
-//           console.log('Result: ', result); //return object success
-//         })
-//         .catch((erro) => {
-//           console.error('Error when sending: ', erro); //return object error
-//         });
-//     }
-//   });
-// }
-
 
     if (status === "notLogged") {
       return strQrCode;
@@ -100,7 +82,7 @@ export class SessionsService {
   start(client) {
     new BrowserData(client);
 
-    new BotsServices(this.botsRepository, this.productsRepository, this.workflowsRepository, this.CartsRepository, this.messagesRepository).botInit(client);
+    new BotsServices(this.botsRepository, this.messagesRepository).botInit(client);
 
     // client.onMessage((message) => {
     //   if (message.body === "Oi") {

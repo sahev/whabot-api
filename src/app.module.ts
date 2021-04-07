@@ -2,12 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { SessionsModule } from './sessions/sessions.module';
-import { Users, Sessions, Messages, Bots, Workflows, Products, Carts } from './entities/index';
+import { Users, Sessions, Messages, Bots, Chats } from './entities/index';
 import { MessagesModule } from './messages/messages.module';
 import { BotsModule } from './bots/bots.module';
-import { ProductsModule } from './products/products.module'
-import { WorkflowsModule } from './workflows/workflows.module'
-import { CartsModule } from './workflows/cart/cart.module'
+import { ChatsModule } from './chats/chats.module';
+import { AppGatewayModule } from './socket/socket.module';
 
 
 
@@ -17,9 +16,8 @@ import { CartsModule } from './workflows/cart/cart.module'
     SessionsModule,
     MessagesModule,
     BotsModule,
-    ProductsModule,
-    WorkflowsModule,
-    CartsModule,
+    ChatsModule,
+    AppGatewayModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -27,7 +25,7 @@ import { CartsModule } from './workflows/cart/cart.module'
       username: 'root',
       password: 'root',
       database: 'whabot',
-      entities: [Users, Sessions, Messages, Bots, WorkflowsModule, Products, Workflows, Carts],
+      entities: [Users, Sessions, Messages, Bots, Chats],
       synchronize: true,
       migrations: ["src/database/migrations/*.ts"],
       cli: {
