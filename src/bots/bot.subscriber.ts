@@ -9,6 +9,9 @@ import {
 import { Bots } from "../entities/index";
 import { BotsServices } from "./bots.service";
 
+import { Socket, Server } from "socket.io";
+import { MessageBody, SubscribeMessage, WebSocketServer } from "@nestjs/websockets";
+
 @EventSubscriber()
 export class BotsSubscriber implements EntitySubscriberInterface<Bots> {
   constructor(
@@ -18,7 +21,8 @@ export class BotsSubscriber implements EntitySubscriberInterface<Bots> {
   ) {
     connection.subscribers.push(this);
   }
-
+  @WebSocketServer() socket: Socket
+  
   listenTo() {
     return Bots;
   }
@@ -30,9 +34,8 @@ export class BotsSubscriber implements EntitySubscriberInterface<Bots> {
   }
 
   afterUpdate(event: UpdateEvent<any>): void {
-    console.log("afterUpdate");
-
-    this.emitUpdatedBots();
+    // this.socket.on('onUpdatedBots:123', res => console.log('socket on res', res))
+    // this.emitUpdatedBots(event);
   }
 
   async emitCreatedBots(entity: any): Promise<void> {
@@ -42,10 +45,22 @@ export class BotsSubscriber implements EntitySubscriberInterface<Bots> {
     this.botGateway.onCreatedBots(entity);
   }
 
-  async emitUpdatedBots(): Promise<void> {
-    const event = await this.botService.getBots({bot_user: "1"});
-    console.log("emitUpdatedBots ", event);
+  async emitUpdatedBots(event: any): Promise<void> {
+    // const event = await this.botService.getBots({bot_user: "1"});
+    // console.log("emitUpdatedBots ", event.connection.subscribers[0]);
+    // console.log(event);
+    
 
-    this.botGateway.onUpdatedBots(event);
+    // this.onUpdatedBots(event);
   }
+
+  // @SubscribeMessage('onUpdatedBots')
+  // onUpdatedBots(
+  //   @MessageBody() data: string
+  // ): void {
+  //   // console.log('data: ', data);
+  //   this.socket.emit('onUpdatedBots', data)
+
+  // }
+  
 }

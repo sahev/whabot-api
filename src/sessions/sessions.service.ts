@@ -5,17 +5,24 @@ import { create, Whatsapp } from "venom-bot";
 import { setBotStatusDTO } from "../bots/botsDTO";
 import { Bots, Messages } from "../entities";
 import { BrowserData } from "./BrowserData";
-import { BotsServices }  from '../bots/bots.service'
+import { BotsServices } from "../bots/bots.service";
 import { Utils } from "../utils";
-
+import {
+  MessageBody,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from "@nestjs/websockets";
+import { Server } from "socket.io";
 
 @Injectable()
+@WebSocketGateway()
 export class SessionsService {
+  @WebSocketServer() server: Server;
   constructor(
     // private readonly connection: Connection,
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
     @InjectRepository(Messages) private messagesRepository: Repository<Messages>
-    
   ) {}
 
   async getSessionTokenBrowser(data: any) {
@@ -23,12 +30,16 @@ export class SessionsService {
   }
 
   async logout(clientId) {
-    let p = BrowserData.dataBrowser
-
-    p.map(page => {
-      if (page.session == clientId)
-        page.close();
-    })
+    let p = BrowserData.dataBrowser;
+    let b = await this.getBot(clientId)
+    
+    if (b.bot_status !== "notLogged") {
+      p.map((page) => {
+        if (page.session == clientId) { 
+          page.close()
+        };
+      });
+    }
   }
 
   getClient(data: any, clientName: any) {
@@ -44,20 +55,24 @@ export class SessionsService {
   }
 
   async setBotStatus(botId: number, data: setBotStatusDTO) {
+    const obj = { bot_bot: botId, bot_status: data.bot_status }
     await this.botsRepository.update({ bot_bot: botId }, data);
+    this.onUpdatedBots(obj);
+  }
+
+  @SubscribeMessage("onUpdatedBots")
+  onUpdatedBots(@MessageBody() data: {}): void {
+    this.server.emit("onUpdatedBots", data);
   }
 
   async startBot(botId) {
     let strQrCode = "";
-    let status = '';
+    let status = "";
 
-
-    
     await create(
       botId.toString(),
       (qrcode) => {
         if (qrcode) {
-          new BotsServices(this.botsRepository, this.messagesRepository).setQrCodeByBot( { bot_qrcode: qrcode} , botId)
           strQrCode = qrcode;
           throw BadRequestException;
         }
@@ -65,8 +80,8 @@ export class SessionsService {
       //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
       async (statusSession) => {
         status = statusSession;
-        console.log('status', status);
-        
+        console.log("status", status);
+
         await this.setBotStatus(botId, { bot_status: statusSession });
       },
       { logQR: false }
@@ -82,7 +97,9 @@ export class SessionsService {
   start(client) {
     new BrowserData(client);
 
-    new BotsServices(this.botsRepository, this.messagesRepository).botInit(client);
+    new BotsServices(this.botsRepository, this.messagesRepository).botInit(
+      client
+    );
 
     // client.onMessage((message) => {
     //   if (message.body === "Oi") {

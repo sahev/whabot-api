@@ -5,6 +5,9 @@ import {
   WebSocketServer,
   OnGatewayInit,
   OnGatewayDisconnect,
+  SubscribeMessage,
+  MessageBody,
+  ConnectedSocket,
 } from "@nestjs/websockets";
 import { Socket, Server } from "socket.io";
 
@@ -13,7 +16,7 @@ export class BotGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
 
-  private logger: Logger = new Logger("SessionGateway");
+  private logger: Logger = new Logger("BotGateway");
 
   afterInit(server: Socket) {
     this.logger.log("Inicializado!");
@@ -25,11 +28,21 @@ export class BotGateway
     this.server.emit(`onCreatedBots:${entity.bot_user}`, entity);
   }
 
-  onUpdatedBots(entity: any): void {
-    console.log("onUpdatedBots", entity);
+  @SubscribeMessage('onUpdatedBots')
+  onUpdatedBots(
+    @MessageBody() data: string
+  ): void {
+    // console.log('data: ', data);
+    this.server.emit('onUpdatedBots', data)
 
-    this.server.emit(`onUpdatedBots`, entity);
   }
+  // onUpdatedBots(entity: any): void {
+  //   // console.log("onUpdatedBots", entity);
+  //   console.log(this.socket);
+    
+  //   // this.socket.on('onUpdatedBots:123', res => console.log('socket on res', res))
+  //   this.server.emit(`onUpdatedBots`, entity);
+  // }
 
   handleConnection(client: Socket) {
     this.logger.log(`client connected: ${client.id}`);
