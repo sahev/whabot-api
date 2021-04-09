@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ChatsServices } from './chats.service';
 import ChatsController from './chats.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Chats } from '../entities';
+import { Chats } from './chats.entities';
 import { GatewayModule } from '../socket/socket.module';
 import { ChatsSubscriber } from './chats.subscriber';
 

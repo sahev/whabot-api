@@ -33,34 +33,10 @@ export class BotsSubscriber implements EntitySubscriberInterface<Bots> {
     this.emitCreatedBots(event.entity);
   }
 
-  afterUpdate(event: UpdateEvent<any>): void {
-    // this.socket.on('onUpdatedBots:123', res => console.log('socket on res', res))
-    // this.emitUpdatedBots(event);
-  }
-
   async emitCreatedBots(entity: any): Promise<void> {
-    // const event = await this.botService.getBots(entity);
     console.log("emitCreatedBots ", entity);
 
     this.botGateway.onCreatedBots(entity);
   }
-
-  async emitUpdatedBots(event: any): Promise<void> {
-    // const event = await this.botService.getBots({bot_user: "1"});
-    // console.log("emitUpdatedBots ", event.connection.subscribers[0]);
-    // console.log(event);
-    
-
-    // this.onUpdatedBots(event);
-  }
-
-  // @SubscribeMessage('onUpdatedBots')
-  // onUpdatedBots(
-  //   @MessageBody() data: string
-  // ): void {
-  //   // console.log('data: ', data);
-  //   this.socket.emit('onUpdatedBots', data)
-
-  // }
   
 }

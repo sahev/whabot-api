@@ -25,8 +25,6 @@ export class Bots {
     @Column()
     bot_type: string;
 
-    @Column()
-    bot_model: string;
 
 }
 

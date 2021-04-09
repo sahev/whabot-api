@@ -6,7 +6,7 @@ import {
     EventSubscriber,
     InsertEvent,
   } from 'typeorm';
-  import { Chats } from '../entities/index';
+  import { Chats } from './chats.entities';
 import { ChatsServices } from './chats.service';
   
   @EventSubscriber()

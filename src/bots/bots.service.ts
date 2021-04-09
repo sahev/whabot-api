@@ -56,10 +56,26 @@ export class BotsServices {
 
      client.onMessage(async (message) => {
       // let res = await new WorkflowsServices(this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
-        
+          
+      // classe do bot:
+      // 1: a cada mensagem
+      // 2: emito a mensagem recebida para a classe de workflow
+
+      // classe do workflow:
+      // 1: ouvinte das mensagens
+      // 2: buscar na mensagem recebida uma palavra chave cadastrada
+      // 3: se a palavra chave for encontrada, encaminhar a conversa para o próximo estágio e retornar a mensagem de resposta do estágio
+      // 4: emitir uma mensagem com o retorno encontrado para a classe bot
+      
+      // classe bot:
+      // 1: enviar a mensagem de resposta retornada da classe workflow
+
+
       if (!message.isGroupMsg) {
-        console.log(message.from);
-        
+        console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
+        console.log(message.body);
+
+
         // for (let i = 0; i < res.length; i++) {
         //   const reply = res[i];
         //   client.sendText(message.from, reply);
