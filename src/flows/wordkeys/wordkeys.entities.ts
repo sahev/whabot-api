@@ -1,7 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, Unique} from "typeorm";
 
 @Entity()
-@Unique(['wok_stage', 'wok_word']) 
+@Unique(['wok_stage', 'wok_word', 'wok_workflow']) 
 export class WordKeys {
 
     @PrimaryGeneratedColumn()
@@ -17,4 +17,6 @@ export class WordKeys {
     @Column()
     wok_response: string;
 
+    @Column()
+    wok_workflow: number;
 }

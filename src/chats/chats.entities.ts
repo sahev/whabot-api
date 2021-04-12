@@ -1,6 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, Unique} from "typeorm";
 
 @Entity()
+@Unique(['cha_chatId', 'cha_bot']) 
 export class Chats {
 
     @PrimaryGeneratedColumn()

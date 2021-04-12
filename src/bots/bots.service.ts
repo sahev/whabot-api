@@ -5,7 +5,6 @@ import { ChatsServices } from "../chats/chats.service";
 import { Chats } from "../chats/chats.entities"
 import { Bots, Messages } from "../entities/index";
 import { addBotsDTO, alterBotsDTO, getBotsDTO } from "./botsDTO";
-import { Stages } from "../flows/stages/stages.entities";
 
 @Injectable()
 export class BotsServices {
@@ -14,7 +13,6 @@ export class BotsServices {
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
     @InjectRepository(Messages) public messagesRepository: Repository<Messages>,
     @InjectRepository(Chats) public chatsRepository: Repository<Chats>,
-    @InjectRepository(Stages) public staRepository: Repository<Stages>,
   ) {
   }
 
@@ -74,10 +72,10 @@ export class BotsServices {
       // classe bot:
       // 1: enviar a mensagem de resposta retornada da classe workflow
 
-      if (!message.isGroupMsg) {
+      if (!message.isGroupMsg && message.chatId == '5511981568415@c.us' || message.chatId == '5511997035927@c.us') {
         console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
         
-        let res = await new ChatsServices(this.chatsRepository, this.staRepository).onMessage(client, message, botId);
+        let res = await new ChatsServices(this.chatsRepository).onMessage(client, message, botId);
         console.log('bots service, ',res);
         
         client.sendText(message.from, res);
