@@ -17,7 +17,16 @@ export class StagesServices {
 
   async newStage(data: StagesDTO) {
     try {
+      let { parent } = await this.stagesRepository.createQueryBuilder("stages")
+      .where('sta_workflow = :workflow', { workflow: data.sta_workflow })
+      .select(['sta_stage as parent'])
+      .orderBy('sta_stage', "DESC")
+      .getRawOne();
+
+      data.sta_parent = parent;      
+         
       return await this.stagesRepository.save(data)
+
     } catch {
       return new BadRequestException(
         "Stage already exists."

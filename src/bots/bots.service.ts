@@ -1,16 +1,20 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { getManager, Repository } from "typeorm";
-import { Whatsapp } from "venom-bot";
+import { ChatsServices } from "../chats/chats.service";
+import { Chats } from "../chats/chats.entities"
 import { Bots, Messages } from "../entities/index";
 import { addBotsDTO, alterBotsDTO, getBotsDTO } from "./botsDTO";
+import { Stages } from "../flows/stages/stages.entities";
 
 @Injectable()
 export class BotsServices {
 
   constructor(
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
-    @InjectRepository(Messages) public messagesRepository: Repository<Messages>
+    @InjectRepository(Messages) public messagesRepository: Repository<Messages>,
+    @InjectRepository(Chats) public chatsRepository: Repository<Chats>,
+    @InjectRepository(Stages) public staRepository: Repository<Stages>,
   ) {
   }
 
@@ -50,13 +54,13 @@ export class BotsServices {
     });
   }
 
-  async botInit(client) {
+  async botInit(client, botId) {
 
    
 
      client.onMessage(async (message) => {
       // let res = await new WorkflowsServices(this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
-          
+      
       // classe do bot:
       // 1: a cada mensagem
       // 2: emito a mensagem recebida para a classe de workflow
@@ -70,11 +74,13 @@ export class BotsServices {
       // classe bot:
       // 1: enviar a mensagem de resposta retornada da classe workflow
 
-
       if (!message.isGroupMsg) {
         console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
-        console.log(message.body);
-
+        
+        let res = await new ChatsServices(this.chatsRepository, this.staRepository).onMessage(client, message, botId);
+        console.log('bots service, ',res);
+        
+        client.sendText(message.from, res);
 
         // for (let i = 0; i < res.length; i++) {
         //   const reply = res[i];

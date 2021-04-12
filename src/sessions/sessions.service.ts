@@ -4,6 +4,7 @@ import { Connection, Repository } from "typeorm";
 import { create, Whatsapp } from "venom-bot";
 import { setBotStatusDTO } from "../bots/botsDTO";
 import { Bots, Messages } from "../entities";
+import { Chats } from '../chats/chats.entities'
 import { BrowserData } from "./BrowserData";
 import { BotsServices } from "../bots/bots.service";
 import { Utils } from "../utils";
@@ -14,6 +15,7 @@ import {
   WebSocketServer,
 } from "@nestjs/websockets";
 import { Server } from "socket.io";
+import { Stages } from "../flows/stages/stages.entities";
 
 @Injectable()
 @WebSocketGateway()
@@ -22,7 +24,9 @@ export class SessionsService {
   constructor(
     // private readonly connection: Connection,
     @InjectRepository(Bots) public botsRepository: Repository<Bots>,
-    @InjectRepository(Messages) private messagesRepository: Repository<Messages>
+    @InjectRepository(Messages) private messagesRepository: Repository<Messages>,
+    @InjectRepository(Chats) public chatsRepository: Repository<Chats>,
+    @InjectRepository(Stages) public staRepository: Repository<Stages>,
   ) {}
 
   async getSessionTokenBrowser(data: any) {
@@ -86,7 +90,7 @@ export class SessionsService {
       },
       { logQR: false }
     )
-      .then((client) => this.start(client))
+      .then((client) => this.start(client, botId))
       .catch((error) => console.log(error));
 
     if (status === "notLogged") {
@@ -94,11 +98,11 @@ export class SessionsService {
     }
   }
 
-  start(client) {
+  start(client, botId) {
     new BrowserData(client);
 
-    new BotsServices(this.botsRepository, this.messagesRepository).botInit(
-      client
+    new BotsServices(this.botsRepository, this.messagesRepository, this.chatsRepository, this.staRepository).botInit(
+      client, botId
     );
 
     // client.onMessage((message) => {

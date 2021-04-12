@@ -14,6 +14,9 @@ export class Chats {
     cha_message: string;
 
     @Column()
-    cha_customer: string;
+    cha_chatId: string;
+
+    @Column()
+    cha_bot: number;
 
 }

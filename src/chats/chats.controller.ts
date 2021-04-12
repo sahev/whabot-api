@@ -16,5 +16,6 @@ export default class ChatsController {
   async getMessages(@Param('cha_customer') cha_customer: ChatsDTO) {
     return await this.chatsServices.getMessages(cha_customer);
   }
+
 }
  

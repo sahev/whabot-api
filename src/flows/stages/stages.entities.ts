@@ -14,6 +14,9 @@ export class Stages {
     @Column()
     sta_workflow: number;
 
+    @Column()
+    sta_parent: number;
+
     @Column({ default: true })
     sta_enabled: boolean;
 
