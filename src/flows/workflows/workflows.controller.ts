@@ -11,9 +11,9 @@ export class WorkflowsController {
       return this.wfServices.findAll();
   }  
   
-  @Get(':wor_bot')
-  getWorkflowsByBot(@Param() wor_bot: number) {
-    return this.wfServices.findByBot(wor_bot);
+  @Get('bots')
+  getWorkflowsByBot() {
+    return this.wfServices.findAllBots();
   }
   
   @Post()

@@ -7,7 +7,6 @@ import { Bots, Messages } from "../entities";
 import { Chats } from '../chats/chats.entities'
 import { BrowserData } from "./BrowserData";
 import { BotsServices } from "../bots/bots.service";
-import { Utils } from "../utils";
 import {
   MessageBody,
   SubscribeMessage,
@@ -101,7 +100,7 @@ export class SessionsService {
   start(client, botId) {
     new BrowserData(client);
 
-    new BotsServices(this.botsRepository, this.messagesRepository, this.chatsRepository, this.staRepository).botInit(
+    new BotsServices(this.botsRepository, this.messagesRepository, this.chatsRepository).botInit(
       client, botId
     );
 

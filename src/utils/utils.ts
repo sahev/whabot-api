@@ -1,4 +1,4 @@
-import { BrowserData } from "./sessions/BrowserData";
+import { BrowserData } from "../sessions/BrowserData";
 
 export class Utils {
   getBrowserData(data: string) {    

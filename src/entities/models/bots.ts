@@ -23,7 +23,7 @@ export class Bots {
     bot_description: string;
 
     @Column()
-    bot_type: string;
+    bot_workflow: number;
 
 
 }

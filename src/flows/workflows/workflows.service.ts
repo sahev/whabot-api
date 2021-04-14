@@ -1,13 +1,16 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Bots } from '../../entities';
 import { WorkflowsDTO } from './workflows.dto';
 import { Workflows } from './workflows.entities';
 
 @Injectable()
 export class WorkflowsServices {
   constructor(
-    @InjectRepository(Workflows) private workflowsRepository: Repository<Workflows>) {
+    @InjectRepository(Workflows) private workflowsRepository: Repository<Workflows>,
+    @InjectRepository(Bots) private botsRepository: Repository<Bots>,
+    ) {
 
   }
 
@@ -25,8 +28,8 @@ export class WorkflowsServices {
     }
   }
 
-  async findByBot(wor_bot: number) {
-    return await this.workflowsRepository.find({ wor_bot })
+  async findAllBots() {
+    return await this.botsRepository.find()
   }
 
 }

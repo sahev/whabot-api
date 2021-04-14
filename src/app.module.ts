@@ -7,11 +7,11 @@ import { MessagesModule } from './messages/messages.module';
 import { BotsModule } from './bots/bots.module';
 import { ChatsModule } from './chats/chats.module';
 import { GatewayModule } from './socket/socket.module';
-import { WorkflowsModule } from './flows/workflows.module';
+import { WorkflowsModule } from './flows/workflows/workflows.module';
 import { StagesModule } from './flows/stages/stages.module'
 import { ConditionalsModule } from './flows/conditionals/conditionals.module';
 import { WordKeysModule } from './flows/wordkeys/wordkeys.module';
-import { Workflows } from './flows/workflows.entities';
+import { Workflows } from './flows/workflows/workflows.entities';
 import { Stages } from './flows/stages/stages.entities';
 import { Conditionals } from './flows/conditionals/conditionals.entities'
 import { WordKeys } from './flows/wordkeys/wordkeys.entities'

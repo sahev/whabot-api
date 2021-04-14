@@ -14,7 +14,7 @@ import {
 } from "@nestjs/common";
 import { BrowserData } from "./BrowserData";
 import { create } from "venom-bot";
-import { Utils } from "../utils";
+import { Utils } from "../utils/utils";
 
 @Controller()
 @Injectable()

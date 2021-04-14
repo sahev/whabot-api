@@ -7,7 +7,7 @@ import { Chats } from "../chats/chats.entities"
 import { GatewayModule } from '../socket/socket.module';
 import { BotsSubscriber } from './bot.subscriber';
 import { Stages } from '../flows/stages/stages.entities';
-import { Workflows } from '../flows/workflows.entities';
+import { Workflows } from '../flows/workflows/workflows.entities';
 
 @Module({
   controllers: [BotsController],

@@ -5,7 +5,7 @@ import SessionsController from './sessions.controller';
 import { Bots, Messages } from '../entities/index';
 import { Chats } from '../chats/chats.entities';
 import { Stages } from '../flows/stages/stages.entities';
-import { Workflows } from '../flows/workflows.entities';
+import { Workflows } from '../flows/workflows/workflows.entities';
 
 @Module({
   controllers: [SessionsController],

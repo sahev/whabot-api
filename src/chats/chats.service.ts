@@ -27,9 +27,10 @@ export class ChatsServices {
     return r;
   }
 
-  async onMessage(client: object, message: any, botId): Promise<string> {
+  async onMessage(message: any, botId): Promise<string> {
+    
+    let response: string;
     const nextStage = await this.getNextStage(message.chatId, botId);
-    console.log("getnextStage: ", nextStage);
 
     let data = {
       cha_message: message.body,
@@ -38,9 +39,6 @@ export class ChatsServices {
       cha_bot: botId,
     };
 
-    console.log("data: ", data);
-
-    let response: string;
 
     try {
       await this.chatsRepository.save(data);
@@ -56,6 +54,8 @@ export class ChatsServices {
       }
     }
 
+    console.log( `recebido: ${message.body}; esperado: ${nextStage.wok_word}; nextStage: ${nextStage.nextStage} `);
+    
     return response;
   }
 

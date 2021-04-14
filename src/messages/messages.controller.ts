@@ -7,7 +7,7 @@ import {
   Controller,
   Post
 } from "@nestjs/common";
-import { Utils } from '../utils'
+import { Utils } from '../utils/utils'
 
 
 

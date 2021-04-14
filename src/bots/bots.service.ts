@@ -75,8 +75,7 @@ export class BotsServices {
       if (!message.isGroupMsg && message.chatId == '5511981568415@c.us' || message.chatId == '5511997035927@c.us') {
         console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
         
-        let res = await new ChatsServices(this.chatsRepository).onMessage(client, message, botId);
-        console.log('bots service, ',res);
+        let res = await new ChatsServices(this.chatsRepository).onMessage(message, botId);
         
         client.sendText(message.from, res);
 
