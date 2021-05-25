@@ -54,7 +54,7 @@ export class ChatsServices {
       }
     }
 
-    console.log( `recebido: ${message.body}; esperado: ${nextStage.wok_word}; nextStage: ${nextStage.nextStage} `);
+    console.log( `botid: ${botId}; recebido: ${message.body}; esperado: ${nextStage.wok_word}; nextStage: ${nextStage.nextStage} `);
     
     return response;
   }
@@ -84,7 +84,7 @@ export class ChatsServices {
           SELECT sta_stage as nextStage, wok_word, wok_response FROM chats
             RIGHT JOIN stages ON sta_stage = cha_stage
             RIGHT JOIN workflows ON sta_workflow = wor_workflow AND wor_enabled = 1 
-            RIGHT JOIN bots ON wor_bot = bot_bot
+            RIGHT JOIN bots ON wor_workflow = bot_workflow
             RIGHT JOIN word_keys ON wok_stage = sta_parent and wok_workflow = wor_workflow AND wok_workflow = wor_workflow
           WHERE sta_parent = 0 AND bot_bot = ${botId}
         `);

@@ -11,6 +11,7 @@ import { WorkflowsModule } from './flows/workflows/workflows.module';
 import { StagesModule } from './flows/stages/stages.module'
 import { ConditionalsModule } from './flows/conditionals/conditionals.module';
 import { WordKeysModule } from './flows/wordkeys/wordkeys.module';
+import { FundsModule } from './funds/funds.module';
 import { Workflows } from './flows/workflows/workflows.entities';
 import { Stages } from './flows/stages/stages.entities';
 import { Conditionals } from './flows/conditionals/conditionals.entities'
@@ -30,6 +31,7 @@ import { Chats } from './chats/chats.entities'
     StagesModule,
     ConditionalsModule,
     WordKeysModule,
+    FundsModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
