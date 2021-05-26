@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { FundsService } from "./funds.service";
-import { FundsDTO } from "./fundsDTO";
+import { FundsStructureDTO } from "./fundsDTO";
 import {
   BadRequestException,
   Body,

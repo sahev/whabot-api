@@ -5,6 +5,7 @@ import { ChatsServices } from "../chats/chats.service";
 import { Chats } from "../chats/chats.entities"
 import { Bots, Messages } from "../entities/index";
 import { addBotsDTO, alterBotsDTO, getBotsDTO } from "./botsDTO";
+import { FundsService } from "../funds/funds.service";
 
 @Injectable()
 export class BotsServices {
@@ -59,6 +60,9 @@ export class BotsServices {
      client.onMessage(async (message) => {
       // let res = await new WorkflowsServices(this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
       
+      let bot = await this.botsRepository.findOne({ bot_bot: botId })
+      console.log('bot id', bot);
+
       // classe do bot:
       // 1: a cada mensagem
       // 2: emito a mensagem recebida para a classe de workflow
@@ -72,12 +76,20 @@ export class BotsServices {
       // classe bot:
       // 1: enviar a mensagem de resposta retornada da classe workflow
 
-      if (!message.isGroupMsg && message.chatId == '5511981568415@c.us' || message.chatId == '5511997035927@c.us') {
-        console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
-        
-        let res = await new ChatsServices(this.chatsRepository).onMessage(message, botId);
-        
-        client.sendText(message.from, res);
+      if (!message.isGroupMsg && message.chatId == '5511981568415@c.us' || message.chatId == '5511997035927@c.us' || message.chatId == '5511970606771@c.us') {
+
+        switch (bot.bot_type) {
+          case 1: // workflow type
+            console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
+            let workResponse = await new ChatsServices(this.chatsRepository).onMessage(message, botId);
+            client.sendText(message.from, workResponse);
+            break;
+          case 2: // fund type
+            let fundResponse = await new FundsService().onMessage(message.body)
+            console.log('fundresp ', fundResponse);
+            client.sendText(message.from, fundResponse);
+            break;
+        }
 
         // for (let i = 0; i < res.length; i++) {
         //   const reply = res[i];

@@ -25,7 +25,8 @@ export class Bots {
     @Column()
     bot_workflow: number;
 
-
+    @Column()
+    bot_type: number;
 }
 
 @Entity()

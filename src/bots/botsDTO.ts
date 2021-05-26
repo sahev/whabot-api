@@ -3,7 +3,7 @@ export class addBotsDTO {
   bot_enabled: boolean
   bot_user: string
   bot_description: string
-  bot_type: string
+  bot_type: number
   bot_model: string
   bot_qrcode: string
 }
