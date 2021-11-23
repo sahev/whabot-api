@@ -37,7 +37,7 @@ import { Chats } from './chats/chats.entities'
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'root',
+      password: 'password',
       database: 'whabot',
       entities: [Users, Sessions, Messages, Bots, Chats, Workflows, Stages, Conditionals, WordKeys],
       synchronize: true,

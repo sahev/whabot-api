@@ -6,6 +6,7 @@ import { Chats } from "../chats/chats.entities"
 import { Bots, Messages } from "../entities/index";
 import { addBotsDTO, alterBotsDTO, getBotsDTO } from "./botsDTO";
 import { FundsService } from "../funds/funds.service";
+import { create } from "venom-bot";
 
 @Injectable()
 export class BotsServices {
@@ -54,8 +55,6 @@ export class BotsServices {
   }
 
   async botInit(client, botId) {
-
-   
 
      client.onMessage(async (message) => {
       // let res = await new WorkflowsServices(this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
@@ -106,4 +105,37 @@ export class BotsServices {
                   .getOne()
   }
 
+  async startBot() {
+
+    let strQrCode = "";
+    let status = "";
+
+    await create({
+     session: 'Test',
+      multidevice: false,
+      
+    })
+      .then((client) => this.start(client))
+      .catch((error) => console.log(error));
+
+    if (status === "notLogged") {
+      return strQrCode;
+    }
+
+  }
+
+  start(client) {    
+        client.onMessage((message) => {
+      if (message.body === 'Hi' && message.isGroupMsg === false) {
+        client
+          .sendText(message.from, 'Welcome Venom 🕷')
+          .then((result) => {
+            console.log('Result: ', result); //return object success
+          })
+          .catch((erro) => {
+            console.error('Error when sending: ', erro); //return object error
+          });
+      }
+    });
+  }
 }

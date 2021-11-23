@@ -35,12 +35,14 @@ export class SessionsService {
   async logout(clientId) {
     let p = BrowserData.dataBrowser;
     let b = await this.getBot(clientId)
+    console.log(b.bot_status);
     
     if (b.bot_status !== "notLogged") {
       p.map((page) => {
         if (page.session == clientId) { 
-          page.close()
-        };
+          page.close();
+          this.setBotStatus(b.bot_bot, { bot_status: "notLogged" })
+        };                
       });
     }
   }
@@ -83,18 +85,22 @@ export class SessionsService {
       //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
       async (statusSession) => {
         status = statusSession;
-        console.log("status", status);
-
         await this.setBotStatus(botId, { bot_status: statusSession });
       },
-      { logQR: false }
+      {
+        multidevice: false, 
+        logQR: false
+      }
     )
       .then((client) => this.start(client, botId))
       .catch((error) => console.log(error));
 
     if (status === "notLogged") {
+      console.log('not logeeeddddddd');
+      
       return strQrCode;
     }
+    
   }
 
   start(client, botId) {

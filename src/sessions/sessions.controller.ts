@@ -70,18 +70,37 @@ export default class SessionsController {
       message = "Bot not found"
     }
 
-    throw new HttpException({ message }, HttpStatus.OK)
-
     
   }
 
   @Get("botstatus/:botId")
   async getBotStatus(@Param("botId") botId: string) {
-    var status = BrowserData.dataBrowser.some((bot) => {
-      return bot.session === botId;
-    });
-    if (!status) 
+    // var status = BrowserData.dataBrowser.some((bot) => {
+    //   console.log(bot.session, 'session');
+      
+    //   return bot.session === botId;
+    // });
+    var bot = await this.sessionsServices.getBot(parseInt(botId));
+    console.log(bot.bot_status);
+    let status;
+    switch (bot.bot_status) {
+      // notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
+      case "notLogged":
+        case "browserClose":
+          case "qrReadFail":
+        status = false;
+        break;
+    
+      default:
+        status = true;
+        break;
+    }
+
+    if (!status) {
       await this.sessionsServices.setBotStatus(parseInt(botId), { bot_status: "notLogged" });
+console.log(bot.bot_status, 'stauss');
+
+    }
     return status;
   }
 

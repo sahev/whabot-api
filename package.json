@@ -19,7 +19,7 @@
 		"socket.io": "^4.0.1",
 		"typeorm": "^0.2.29",
 		"venom": "^0.1.0",
-		"venom-bot": "^3.0.13"
+		"venom-bot": "^4.0.2"
 	},
 	"devDependencies": {
 		"@types/socket.io": "^2.1.13",

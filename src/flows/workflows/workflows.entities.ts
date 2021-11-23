@@ -14,7 +14,7 @@ export class Workflows {
     @Column()
     wor_bot: number;
 
-    @Column({ default: false })
+    @Column({ default: false , nullable: true })
     wor_enabled: boolean;
 
 }
