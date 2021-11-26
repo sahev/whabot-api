@@ -14,6 +14,9 @@ export class WordKeys {
     @Column()
     wok_word: string;
 
+    @Column({ nullable: true })
+    wok_invalidWord: string;
+
     @Column()
     wok_response: string;
 

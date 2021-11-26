@@ -96,8 +96,6 @@ export class SessionsService {
       .catch((error) => console.log(error));
 
     if (status === "notLogged") {
-      console.log('not logeeeddddddd');
-      
       return strQrCode;
     }
     
@@ -109,7 +107,6 @@ export class SessionsService {
     new BotsServices(this.botsRepository, this.messagesRepository, this.chatsRepository).botInit(
       client, botId
     );
-
     // client.onMessage((message) => {
     //   if (message.body === "Oi") {
     //     client.sendText(message.from, "auto resposta");

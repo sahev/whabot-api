@@ -60,7 +60,6 @@ export class BotsServices {
       // let res = await new WorkflowsServices(this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
       
       let bot = await this.botsRepository.findOne({ bot_bot: botId })
-      console.log('bot id', bot);
 
       // classe do bot:
       // 1: a cada mensagem
@@ -81,7 +80,7 @@ export class BotsServices {
           case 1: // workflow type
             console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
             let workResponse = await new ChatsServices(this.chatsRepository).onMessage(message, botId);
-            client.sendText(message.from, workResponse);
+            client.sendText(message.from, workResponse);            
             break;
           case 2: // fund type
             let fundResponse = await new FundsService().onMessage(message.body)
