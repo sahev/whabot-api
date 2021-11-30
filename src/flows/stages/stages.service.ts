@@ -15,18 +15,13 @@ export class StagesServices {
     return await this.stagesRepository.find();
   }
 
+  async updateStage(data: StagesDTO) {
+    return await this.stagesRepository.update({ id: data.id }, data)
+  }
+
   async newStage(data: StagesDTO) {
     try {
-      let { parent } = await this.stagesRepository.createQueryBuilder("stages")
-      .where('sta_workflow = :workflow', { workflow: data.sta_workflow })
-      .select(['sta_stage as parent'])
-      .orderBy('sta_stage', "DESC")
-      .getRawOne();
-
-      data.sta_parent = parent;      
-         
       return await this.stagesRepository.save(data)
-
     } catch {
       return new BadRequestException(
         "Stage already exists."
@@ -34,11 +29,11 @@ export class StagesServices {
     }
   }
 
-  async stageByWorkflow(sta_workflow: StagesDTO) {
-    return await this.stagesRepository.find(sta_workflow)
+  async stageByWorkflow(workflow: StagesDTO) {
+    return await this.stagesRepository.find(workflow)
   }
 
-  async deleteStage(sta_stage: StagesDTO) {
-    return await this.stagesRepository.delete(sta_stage)
+  async deleteStage(id: StagesDTO) {
+    return await this.stagesRepository.delete(id)
   }
 }

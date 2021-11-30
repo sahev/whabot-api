@@ -1,23 +1,26 @@
 import {Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, Unique} from "typeorm";
 
 @Entity()
-@Unique(['sta_name', 'sta_workflow']) 
+@Unique(['type', 'workflow']) 
 export class Stages {
 
-    @PrimaryGeneratedColumn()
+    @Column()
     @PrimaryColumn()
-    sta_stage: number;
+    id: number;
 
     @Column()
-    sta_name: string;
+    type: string;
     
     @Column()
-    sta_workflow: number;
+    label: string;
+    
+    @Column()
+    workflow: number;
 
     @Column()
-    sta_parent: number;
+    x: number;
 
-    @Column({ default: true })
-    sta_enabled: boolean;
+    @Column()
+    y: number;
 
 }

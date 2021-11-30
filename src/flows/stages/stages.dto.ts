@@ -1,7 +1,9 @@
 export class StagesDTO {
-  sta_stage: number
-  sta_name: string
-  sta_workflow: number
-  sta_parent: number
-  sta_enabled: boolean
+  id: number //  id
+  type: string // type 
+  label: string // label 
+  workflow: number // wor id
+  x: number // x
+  y: number // y
 }
+

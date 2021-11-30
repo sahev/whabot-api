@@ -10,8 +10,10 @@ import { GatewayModule } from './socket/socket.module';
 import { WorkflowsModule } from './flows/workflows/workflows.module';
 import { StagesModule } from './flows/stages/stages.module'
 import { ConditionalsModule } from './flows/conditionals/conditionals.module';
+import { LinksModule } from './flows/links/links.module';
 import { WordKeysModule } from './flows/wordkeys/wordkeys.module';
 import { FundsModule } from './funds/funds.module';
+import { Links } from './flows/links/links.entities';
 import { Workflows } from './flows/workflows/workflows.entities';
 import { Stages } from './flows/stages/stages.entities';
 import { Conditionals } from './flows/conditionals/conditionals.entities'
@@ -32,6 +34,7 @@ import { Chats } from './chats/chats.entities'
     ConditionalsModule,
     WordKeysModule,
     FundsModule,
+    LinksModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -39,7 +42,7 @@ import { Chats } from './chats/chats.entities'
       username: 'root',
       password: 'password',
       database: 'whabot',
-      entities: [Users, Sessions, Messages, Bots, Chats, Workflows, Stages, Conditionals, WordKeys],
+      entities: [Users, Sessions, Messages, Bots, Chats, Workflows, Stages, Conditionals, WordKeys, Links],
       synchronize: true,
       migrations: ["src/database/migrations/*.ts"],
       cli: {
