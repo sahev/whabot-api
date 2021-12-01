@@ -11,9 +11,9 @@ export class LinksController {
     return this.linkServices.findAll();
   }  
   
-  @Get(':to')
-  getlinksByStage(@Param() to: LinksDTO) {
-    return this.linkServices.linksByStage(to);
+  @Get(':id')
+  linksByWorkflow(@Param() id) {    
+    return this.linkServices.linksByWorkflow(id.id);
   }
   
   @Post()

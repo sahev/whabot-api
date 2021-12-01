@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Stages } from '../stages/stages.entities';
 import { LinksDTO } from './links.dto';
 import { Links } from './links.entities';
 
@@ -19,8 +20,12 @@ export class LinksServices {
       return await this.linksRepository.save(data);
   }
 
-  async linksByStage(to: LinksDTO) {
-    return await this.linksRepository.find(to)
+  async linksByWorkflow(workflow) {
+    return await this.linksRepository.query(`select l.id, l.from, l.to from links l
+    inner join stages s on l.from = s.id 
+    where s.workflow = ${workflow}`)
+
+    // return await this.linksRepository.find(workflow)
   }
 
   async deleteLink(id: LinksDTO) {
