@@ -16,16 +16,16 @@ export class LinksServices {
     return await this.linksRepository.find();
   }
 
-  async newLink(data: LinksDTO) {
-      return await this.linksRepository.save(data);
+  async newLink(data: Array<LinksDTO>, workflowId) {
+    data.map(async link => {
+      link.id = link.id % 10000;      
+      link.workflow = workflowId;
+    });       
+    return await this.linksRepository.save(data)
   }
 
-  async linksByWorkflow(workflow) {
-    return await this.linksRepository.query(`select l.id, l.from, l.to from links l
-    inner join stages s on l.from = s.id 
-    where s.workflow = ${workflow}`)
-
-    // return await this.linksRepository.find(workflow)
+  async linksByWorkflow(workflow) {    
+    return await this.linksRepository.find({ workflow })
   }
 
   async deleteLink(id: LinksDTO) {

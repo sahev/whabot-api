@@ -1,5 +1,7 @@
 export class LinksDTO {
-  id: number
-  from: number
-  to: number
+  id: number;
+  destination: { id: number, position: string };
+  source: { id: number, position: string };
+  type: string;
+  workflow: number;
 }

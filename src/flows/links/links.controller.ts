@@ -1,6 +1,7 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { LinksServices } from "./links.service"
 import { LinksDTO } from "./links.dto"
+import { identity } from 'rxjs';
 
 @Controller('link')
 export class LinksController {
@@ -16,9 +17,9 @@ export class LinksController {
     return this.linkServices.linksByWorkflow(id.id);
   }
   
-  @Post()
-  newLink(@Body() data: LinksDTO){
-    return this.linkServices.newLink(data);
+  @Post(':id')
+  newLink(@Param() workflowId, @Body() data: Array<LinksDTO>){
+    return this.linkServices.newLink(data, workflowId.id);
   }   
   
   @Delete(':id')
