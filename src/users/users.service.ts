@@ -26,6 +26,9 @@ export class UsersService {
       }
     } catch {
       await this.usersRepository.save(user);
+      console.log('criado', console.log(user) );
+      console.log(data, 'corpo');
+      
       return user;
     }
   }

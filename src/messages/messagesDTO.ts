@@ -1,3 +1,5 @@
+import { IsNotEmpty } from 'class-validator';
+
 export class sendMessagesDTO {
   client: string
   number: string
@@ -17,3 +19,32 @@ export class botMessagesDTO {
   mes_expected: string
 }
  
+export class SendMessagesCampaignDTO {
+  @IsNotEmpty()
+  botId: string;
+
+  @IsNotEmpty()
+  columnSheet: any[];
+
+  @IsNotEmpty()
+  message: string;
+}
+
+export class CampaignHistoryDTO {
+
+  @IsNotEmpty()
+  cah_campaign: number;
+
+  cah_bot: number;
+
+  @IsNotEmpty()
+  cah_to: string;
+
+  @IsNotEmpty()
+  cah_erro: boolean;
+
+  @IsNotEmpty()
+  cah_message: string;
+
+  cah_messageerror: string;
+}

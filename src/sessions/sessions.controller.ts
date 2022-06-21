@@ -33,6 +33,7 @@ export default class SessionsController {
 
     try {
       await bot
+      // @ts-ignore
         .getSessionTokenBrowser()
         .then((result) => {
           response = result;
@@ -52,7 +53,6 @@ export default class SessionsController {
   @Post("start/")
   async getQrCode(@Body() data: any) {
     let message = "";
-
 
     let databot = await this.sessionsServices.getBot(data.botId);
 
@@ -81,7 +81,6 @@ export default class SessionsController {
     //   return bot.session === botId;
     // });
     var bot = await this.sessionsServices.getBot(parseInt(botId));
-    console.log(bot.bot_status);
     let status;
     switch (bot.bot_status) {
       // notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
@@ -98,7 +97,6 @@ export default class SessionsController {
 
     if (!status) {
       await this.sessionsServices.setBotStatus(parseInt(botId), { bot_status: "notLogged" });
-      console.log(bot.bot_status, 'stauss');
 
     }
     return status;

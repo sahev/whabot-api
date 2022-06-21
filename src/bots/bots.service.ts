@@ -23,7 +23,7 @@ export class BotsServices {
   }
 
   async getBots(data: getBotsDTO) {
-    return this.botsRepository.find({ bot_user: data.bot_user });
+    return await this.botsRepository.find({ bot_user: data.bot_user });
   }
 
   async newBot(data: addBotsDTO) {
@@ -86,6 +86,9 @@ export class BotsServices {
             let fundResponse = await new FundsService().onMessage(message.body)
             console.log('fundresp ', fundResponse);
             client.sendText(message.from, fundResponse);
+            break;
+          case 3: // campaign type
+            console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
             break;
         }
 

@@ -7,7 +7,7 @@ export class BrowserData {
 
   getDataBrowser(data: any, clientName: any) {
     let resp = [];
-    data.map((res) => {
+    data.map((res) => {      
       if (res.session === clientName) resp = res;
     });
     return resp;

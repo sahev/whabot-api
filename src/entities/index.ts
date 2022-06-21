@@ -4,5 +4,7 @@ import { Messages } from './models/messages'
 import { Sessions } from './models/sessions'
 import { Chats } from './models/chats'
 import { Customers } from './models/customers'
+import { CampaignHistory } from './models/campaignhistory'
+import { Templates } from './models/templates'
 
-export { Users, Bots, Messages, Sessions, Chats, Customers }
+export { Templates, Users, Bots, Messages, Sessions, Chats, Customers, CampaignHistory }

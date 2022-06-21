@@ -20,8 +20,8 @@ export default class BotsController {
   }
 
   @Get()
-  getBots(@Query() data) {
-    return this.botsServices.getBots(data)
+  async getBots(@Query() data) {
+    return await this.botsServices.getBots(data);
   }
 
   @Get('/test')

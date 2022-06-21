@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { SessionsModule } from './sessions/sessions.module';
-import { Users, Sessions, Messages, Bots } from './entities/index';
+import { Users, Sessions, Messages, Bots, CampaignHistory, Templates } from './entities/index';
 import { MessagesModule } from './messages/messages.module';
 import { BotsModule } from './bots/bots.module';
 import { ChatsModule } from './chats/chats.module';
@@ -13,6 +13,7 @@ import { ConditionalsModule } from './flows/conditionals/conditionals.module';
 import { LinksModule } from './flows/links/links.module';
 import { WordKeysModule } from './flows/wordkeys/wordkeys.module';
 import { FundsModule } from './funds/funds.module';
+import { TemplatesModule } from './templates/templates.module';
 import { Links } from './flows/links/links.entities';
 import { Workflows } from './flows/workflows/workflows.entities';
 import { Stages } from './flows/stages/stages.entities';
@@ -35,6 +36,7 @@ import { Chats } from './chats/chats.entities'
     WordKeysModule,
     FundsModule,
     LinksModule,
+    TemplatesModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -42,12 +44,11 @@ import { Chats } from './chats/chats.entities'
       username: 'root',
       password: 'password',
       database: 'whabot',
-      entities: [Users, Sessions, Messages, Bots, Chats, Workflows, Stages, Conditionals, WordKeys, Links],
+      charset: "utf8mb4_unicode_ci",
+      entities: [Templates, CampaignHistory, Users, Sessions, Messages, Bots, Chats, Workflows, Stages, Conditionals, WordKeys, Links],
       synchronize: true,
       migrations: ["src/database/migrations/*.ts"],
-      cli: {
-        "migrationsDir": "migration"
-      }
+      
     }),
   ],
 })

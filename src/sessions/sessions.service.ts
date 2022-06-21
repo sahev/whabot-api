@@ -28,6 +28,7 @@ export class SessionsService {
     @InjectRepository(Stages) public staRepository: Repository<Stages>,
   ) {}
 
+
   async getSessionTokenBrowser(data: any) {
     return new Whatsapp(data).getSessionTokenBrowser();
   }
@@ -38,13 +39,17 @@ export class SessionsService {
     console.log(b.bot_status);
     
     if (b.bot_status !== "notLogged") {
-      p.map((page) => {
+      p.map(async (page) => {
         if (page.session == clientId) { 
+          
           page.close();
+        //let res =  await page.logout();
+          // console.log(res, 'logout whats');
           this.setBotStatus(b.bot_bot, { bot_status: "notLogged" })
         };                
       });
     }
+
   }
 
   getClient(data: any, clientName: any) {
@@ -71,35 +76,39 @@ export class SessionsService {
   }
 
   async startBot(botId) {
+
     let strQrCode = "";
     let status = "";
 
-    await create(
-      botId.toString(),
-      (qrcode) => {
-        if (qrcode) {
-          strQrCode = qrcode;
-          throw BadRequestException;
+      await create(
+        botId.toString(),
+        (qrcode) => {
+          if (qrcode) {
+            strQrCode = qrcode;
+            throw BadRequestException;
+          }
+        },
+        //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
+        async (statusSession) => {
+          status = statusSession;
+          await this.setBotStatus(botId, { bot_status: statusSession });
+        },
+        {
+          logQR: false
         }
-      },
-      //return isLogged || notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
-      async (statusSession) => {
-        status = statusSession;
-        await this.setBotStatus(botId, { bot_status: statusSession });
-      },
-      {
-        multidevice: false, 
-        logQR: false
-      }
-    )
-      .then((client) => this.start(client, botId))
-      .catch((error) => console.log(error));
+      )
+        .then((client) => { this.start(client, botId); console.log('bot iniciado') })
+        .catch((error) => console.log(error,'error start bot'));
+  
+        if (status === "notLogged") {
+          return strQrCode;
+        }
 
-    if (status === "notLogged") {
-      return strQrCode;
-    }
-    
+
+
   }
+
+
 
   start(client, botId) {
     new BrowserData(client);
