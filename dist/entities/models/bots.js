@@ -46,6 +46,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Bots.prototype, "bot_type", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 'notLogged' }),
+    __metadata("design:type", String)
+], Bots.prototype, "bot_lastStatus", void 0);
 Bots = __decorate([
     (0, typeorm_1.Entity)()
 ], Bots);

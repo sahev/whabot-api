@@ -2,7 +2,7 @@ import { Bots } from "../entities/index";
 import { Chats } from "../chats/chats.entities"
 import { getConnection } from "typeorm";
 
-class startupDb {
+class startup {
     
   public async defaultData() {
     await getConnection("default")
@@ -20,4 +20,5 @@ class startupDb {
 
 }
 
-export default startupDb
+
+export default startup

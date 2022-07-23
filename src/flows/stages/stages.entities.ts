@@ -23,4 +23,7 @@ export class Stages {
     @Column()
     y: number;
 
+    @Column()
+    parent: number;
+    
 }

@@ -31,10 +31,10 @@ let ChatsServices = class ChatsServices {
     }
     async onMessage(message, botId) {
         let response = '';
-        const nextStage = await this.getNextStage(message.chatId, botId);
+        const nextStage = await this.getNextStage(message.key.remoteJid, botId);
         let data = {
-            cha_message: message.body,
-            cha_chatId: message.chatId,
+            cha_message: message.message.conversation,
+            cha_chatId: message.key.remoteJid,
             cha_stage: nextStage.nextStage,
             cha_bot: botId,
         };
@@ -43,33 +43,36 @@ let ChatsServices = class ChatsServices {
             response = nextStage.wok_response;
         }
         catch (_a) {
-            if (message.body.includes(nextStage.wok_word)) {
-                await this.chatsRepository.update({ cha_chatId: message.chatId, cha_bot: botId }, data);
+            if (message.message.conversation.includes(nextStage.wok_word)) {
+                await this.chatsRepository.update({ cha_chatId: message.key.remoteJid, cha_bot: botId }, data);
                 response = nextStage.wok_response;
             }
             else if (nextStage.actualStage > 0) {
+                console.log('response mensagem invalida');
                 response = nextStage.wok_invalidWord;
             }
-            else
+            else {
                 response = nextStage.wok_word;
+                console.log('responde com wokword do proximo estagio');
+            }
         }
         if (!response) {
             response = nextStage.wok_word;
         }
-        console.log(`botid: ${botId}; recebido: ${message.body}; esperado: ${nextStage.wok_word}; resposta: ${response}; actualStage: ${nextStage.actualStage}; nextStage: ${nextStage.nextStage} `);
+        console.log(`botid: ${botId}; recebido: ${message.message.conversation}; esperado: ${nextStage.wok_word}; resposta: ${response}; actualStage: ${nextStage.actualStage}; nextStage: ${nextStage.nextStage} `);
         return response;
     }
     async getNextStage(chatid, botId) {
         let nextStage = await this.chatsRepository
             .createQueryBuilder("chats")
             .innerJoinAndSelect("Word_keys", "wk", "cha_stage = wok_stage")
-            .innerJoinAndSelect("stages", "sta", "cha_stage = sta_parent")
-            .innerJoinAndSelect("workflows", "wor", "wor_workflow = sta_workflow and wor_enabled = 1 and wok_workflow = wor_workflow AND wok_workflow = wor_workflow AND cha_bot = wor_bot")
+            .innerJoinAndSelect("stages", "sta", "cha_stage = parent")
+            .innerJoinAndSelect("workflows", "wor", "wor_workflow = workflow and wor_enabled = 1 and wok_workflow = wor_workflow AND cha_bot = wor_bot")
             .where("cha_bot = :bot", { bot: botId })
             .andWhere("cha_chatId = :chatid", { chatid: chatid })
             .select([
             "cha_stage as actualStage",
-            "sta_stage as nextStage",
+            "id as nextStage",
             "wok_word",
             "wok_response",
             "wok_invalidWord"
@@ -77,12 +80,12 @@ let ChatsServices = class ChatsServices {
             .getRawOne();
         if (nextStage == undefined) {
             let nextStage = await this.chatsRepository.query(`
-      SELECT sta_stage as nextStage, wok_word, wok_response FROM chats
-      RIGHT JOIN stages ON sta_stage = cha_stage
-      RIGHT JOIN workflows ON sta_workflow = wor_workflow AND wor_enabled = 1 
+      SELECT id as nextStage, wok_word, wok_response FROM chats
+      RIGHT JOIN stages ON id = cha_stage
+      RIGHT JOIN workflows ON workflow = wor_workflow AND wor_enabled = 1 
       RIGHT JOIN bots ON wor_workflow = bot_workflow
-      RIGHT JOIN word_keys ON wok_stage = sta_parent and wok_workflow = wor_workflow AND wok_workflow = wor_workflow
-      WHERE sta_parent = 0 AND bot_bot = ${botId}
+      RIGHT JOIN word_keys ON wok_stage = parent and wok_workflow = wor_workflow AND wok_workflow = wor_workflow
+      WHERE parent = 0 AND bot_bot = ${botId}
       `);
             console.log("new message: ", nextStage);
             return nextStage[0];

@@ -52,54 +52,12 @@ export default class SessionsController {
 
   @Post("start/")
   async getQrCode(@Body() data: any) {
-    let message = "";
-
     let databot = await this.sessionsServices.getBot(data.botId);
-
-    if (databot) {
-      if (databot.bot_enabled) {
-        if (databot.bot_status === "notLogged" || databot.bot_status === "browserClose" || databot.bot_status === "autocloseCalled") {
-          throw new HttpException({ string: await this.sessionsServices.startBot(data.botId) }, HttpStatus.CREATED);
-        } else {
-          message = "Bot online"
-        }
-      } else {
-        message = "Bot disabled"
-      }
-    } else {
-      message = "Bot not found"
-    }
-
-
+    return { string: await this.sessionsServices.startBot(data.botId) };
   }
 
   @Get("botstatus/:botId")
   async getBotStatus(@Param("botId") botId: string) {
-    // var status = BrowserData.dataBrowser.some((bot) => {
-    //   console.log(bot.session, 'session');
-
-    //   return bot.session === botId;
-    // });
-    var bot = await this.sessionsServices.getBot(parseInt(botId));
-    let status;
-    switch (bot.bot_status) {
-      // notLogged || browserClose || qrReadSuccess || qrReadFail || autocloseCalled || desconnectedMobile || deleteToken || inChat || chatsAvailable
-      case "notLogged":
-      case "browserClose":
-      case "qrReadFail":
-        status = false;
-        break;
-
-      default:
-        status = true;
-        break;
-    }
-
-    if (!status) {
-      await this.sessionsServices.setBotStatus(parseInt(botId), { bot_status: "notLogged" });
-
-    }
-    return status;
+    return await this.sessionsServices.getBotStatus(parseInt(botId));
   }
-
 }

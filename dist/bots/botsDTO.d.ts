@@ -13,6 +13,7 @@ export declare class alterBotsDTO {
 }
 export declare class setBotStatusDTO {
     bot_status: string;
+    bot_lastStatus?: string;
 }
 export declare class getBotsDTO {
     bot_user: string;

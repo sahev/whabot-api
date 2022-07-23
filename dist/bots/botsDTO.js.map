@@ -1,1 +1,1 @@
-{"version":3,"file":"botsDTO.js","sourceRoot":"","sources":["../../src/bots/botsDTO.ts"],"names":[],"mappings":";;;AAAA,MAAa,UAAU;CAQtB;AARD,gCAQC;AAED,MAAa,YAAY;CAGxB;AAHD,oCAGC;AAED,MAAa,eAAe;CAE3B;AAFD,0CAEC;AAED,MAAa,UAAU;CAEtB;AAFD,gCAEC;AAED,MAAa,YAAY;CAGxB;AAHD,oCAGC"}
+{"version":3,"file":"botsDTO.js","sourceRoot":"","sources":["../../src/bots/botsDTO.ts"],"names":[],"mappings":";;;AAAA,MAAa,UAAU;CAQtB;AARD,gCAQC;AAED,MAAa,YAAY;CAGxB;AAHD,oCAGC;AAED,MAAa,eAAe;CAG3B;AAHD,0CAGC;AAED,MAAa,UAAU;CAEtB;AAFD,gCAEC;AAED,MAAa,YAAY;CAGxB;AAHD,oCAGC"}

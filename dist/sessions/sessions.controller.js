@@ -41,42 +41,11 @@ let SessionsController = class SessionsController {
         }
     }
     async getQrCode(data) {
-        let message = "";
         let databot = await this.sessionsServices.getBot(data.botId);
-        if (databot) {
-            if (databot.bot_enabled) {
-                if (databot.bot_status === "notLogged" || databot.bot_status === "browserClose" || databot.bot_status === "autocloseCalled") {
-                    throw new common_1.HttpException({ string: await this.sessionsServices.startBot(data.botId) }, common_1.HttpStatus.CREATED);
-                }
-                else {
-                    message = "Bot online";
-                }
-            }
-            else {
-                message = "Bot disabled";
-            }
-        }
-        else {
-            message = "Bot not found";
-        }
+        return { string: await this.sessionsServices.startBot(data.botId) };
     }
     async getBotStatus(botId) {
-        var bot = await this.sessionsServices.getBot(parseInt(botId));
-        let status;
-        switch (bot.bot_status) {
-            case "notLogged":
-            case "browserClose":
-            case "qrReadFail":
-                status = false;
-                break;
-            default:
-                status = true;
-                break;
-        }
-        if (!status) {
-            await this.sessionsServices.setBotStatus(parseInt(botId), { bot_status: "notLogged" });
-        }
-        return status;
+        return await this.sessionsServices.getBotStatus(parseInt(botId));
     }
 };
 __decorate([

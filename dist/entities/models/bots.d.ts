@@ -7,6 +7,7 @@ export declare class Bots {
     bot_description: string;
     bot_workflow: number;
     bot_type: number;
+    bot_lastStatus: string;
 }
 export declare class botMessagesDTO {
     mes_bot: number;

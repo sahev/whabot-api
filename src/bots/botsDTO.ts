@@ -15,6 +15,7 @@ export class alterBotsDTO {
 
 export class setBotStatusDTO {
   bot_status: string
+  bot_lastStatus?: string
 }
 
 export class getBotsDTO {

@@ -6,6 +6,7 @@ import { Users, Sessions, Messages, Bots, CampaignHistory, Templates } from './e
 import { MessagesModule } from './messages/messages.module';
 import { BotsModule } from './bots/bots.module';
 import { ChatsModule } from './chats/chats.module';
+import { QueueModule } from './messagequeue/queue.module';
 import { GatewayModule } from './socket/socket.module';
 import { WorkflowsModule } from './flows/workflows/workflows.module';
 import { StagesModule } from './flows/stages/stages.module'
@@ -20,6 +21,10 @@ import { Stages } from './flows/stages/stages.entities';
 import { Conditionals } from './flows/conditionals/conditionals.entities'
 import { WordKeys } from './flows/wordkeys/wordkeys.entities'
 import { Chats } from './chats/chats.entities'
+import { Documents } from './nlp/documents/documents.entities'
+import { Responses } from './nlp/responses/responses.entities'
+import { DocumentsModule } from './nlp/documents/documents.module';
+import { ResponsesModule } from './nlp/responses/responses.module';
 
 
 @Module({
@@ -37,6 +42,9 @@ import { Chats } from './chats/chats.entities'
     FundsModule,
     LinksModule,
     TemplatesModule,
+    QueueModule,
+    DocumentsModule,
+    ResponsesModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -45,7 +53,7 @@ import { Chats } from './chats/chats.entities'
       password: 'password',
       database: 'whabot',
       charset: "utf8mb4_unicode_ci",
-      entities: [Templates, CampaignHistory, Users, Sessions, Messages, Bots, Chats, Workflows, Stages, Conditionals, WordKeys, Links],
+      entities: [Documents, Responses, Templates, CampaignHistory, Users, Sessions, Messages, Bots, Chats, Workflows, Stages, Conditionals, WordKeys, Links],
       synchronize: true,
       migrations: ["src/database/migrations/*.ts"],
       

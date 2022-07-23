@@ -56,7 +56,10 @@ export class BotsServices {
 
   async botInit(client, botId) {
 
+    console.log(client, 'ouvindo');
      client.onMessage(async (message) => {
+
+      console.log(message, 'ouvindo');
       // let res = await new WorkflowsServices(this.productsRepository, this.cartsRepository, this.messagesRepository).getInitials((await this.getBotId(client.session)), message)
       
       let bot = await this.botsRepository.findOne({ bot_bot: botId })
@@ -73,8 +76,8 @@ export class BotsServices {
       
       // classe bot:
       // 1: enviar a mensagem de resposta retornada da classe workflow
-
-      if (!message.isGroupMsg && message.chatId == '5511981568415@c.us' || message.chatId == '5511997035927@c.us' || message.chatId == '5511970606771@c.us') {
+      
+      if (!message.isGroupMsg && message.chatId == '5511981568415@c.us' || message.chatId == '5511981242352@c.us' || message.chatId == '5511997035927@c.us' || message.chatId == '5511970606771@c.us') {
 
         switch (bot.bot_type) {
           case 1: // workflow type
@@ -98,6 +101,8 @@ export class BotsServices {
         // }
       }
     });
+
+    return
   }
 
   async getBotId(name) {

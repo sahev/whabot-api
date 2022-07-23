@@ -48,7 +48,10 @@ export class FundsService {
   async createFundObj(fund) {
     try {
       const html = await axios.get(`https://fiis.com.br/${fund}/`);
+      console.log(html, 'htmlllll');
+      
       let $ = cheerio.load(html.data);
+console.log($, '$$$$$$$$');
 
       return <FundsStructureDTO> {
         ticker: $(FundsStructure.ticker).text(),

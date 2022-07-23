@@ -15,12 +15,17 @@ const index_1 = require("../entities/index");
 const chats_entities_1 = require("../chats/chats.entities");
 const stages_entities_1 = require("../flows/stages/stages.entities");
 const workflows_entities_1 = require("../flows/workflows/workflows.entities");
+const queue_module_1 = require("../messagequeue/queue.module");
+const documents_entities_1 = require("../nlp/documents/documents.entities");
+const responses_entities_1 = require("../nlp/responses/responses.entities");
+const documents_module_1 = require("../nlp/documents/documents.module");
+const responses_module_1 = require("../nlp/responses/responses.module");
 let SessionsModule = class SessionsModule {
 };
 SessionsModule = __decorate([
     (0, common_1.Module)({
         controllers: [sessions_controller_1.default],
-        imports: [typeorm_1.TypeOrmModule.forFeature([index_1.Bots, index_1.Messages, chats_entities_1.Chats, stages_entities_1.Stages, workflows_entities_1.Workflows])],
+        imports: [queue_module_1.QueueModule, documents_module_1.DocumentsModule, responses_module_1.ResponsesModule, typeorm_1.TypeOrmModule.forFeature([documents_entities_1.Documents, responses_entities_1.Responses, index_1.Bots, index_1.Messages, chats_entities_1.Chats, stages_entities_1.Stages, workflows_entities_1.Workflows])],
         providers: [sessions_service_1.SessionsService],
         exports: [sessions_service_1.SessionsService],
     })

@@ -27,6 +27,9 @@ export class Bots {
 
     @Column()
     bot_type: number;
+
+    @Column({ default: 'notLogged' })
+    bot_lastStatus: string;
 }
 
 @Entity()

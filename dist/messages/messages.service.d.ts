@@ -1,3 +1,4 @@
+import { BadRequestException, InternalServerErrorException, HttpStatus } from "@nestjs/common";
 import { CampaignHistory, Messages } from "../entities/index";
 import { Repository } from "typeorm";
 import { CampaignHistoryDTO, MessagesDTO } from "./messagesDTO";
@@ -14,4 +15,8 @@ export declare class MessagesService {
     formatNumber(number: number): string;
     cleanSheet(sheet: any): any;
     setSendedMessage(message: CampaignHistoryDTO): void;
+    sendMessage(data: any): Promise<BadRequestException | InternalServerErrorException | {
+        status: HttpStatus;
+        message: string;
+    }>;
 }

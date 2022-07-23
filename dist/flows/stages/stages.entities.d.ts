@@ -5,4 +5,5 @@ export declare class Stages {
     workflow: number;
     x: number;
     y: number;
+    parent: number;
 }

@@ -15,28 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const messages_service_1 = require("./messages.service");
 const messagesDTO_1 = require("./messagesDTO");
 const common_1 = require("@nestjs/common");
-const utils_1 = require("../utils/utils");
 let MessagesController = class MessagesController {
     constructor(messagesServices) {
         this.messagesServices = messagesServices;
     }
     async sendMessage(data) {
-        let response = {};
-        let bot = new utils_1.Utils().getBrowserData(data.client);
-        try {
-            await bot
-                .sendText(data.number + "@c.us", data.text)
-                .then((result) => {
-                response = result;
-            })
-                .catch((erro) => {
-                console.error("Error when sending: ", erro);
-            });
-            return response;
-        }
-        catch (_a) {
-            return new common_1.BadRequestException("Bot not started or not found").getResponse();
-        }
+        return await this.messagesServices.sendMessage(data);
     }
     async newMessage(data) {
         return this.messagesServices.newMessage(data);
@@ -46,7 +30,7 @@ let MessagesController = class MessagesController {
     }
 };
 __decorate([
-    (0, common_1.Post)("send/"),
+    (0, common_1.Post)("send/message"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [messagesDTO_1.sendMessagesDTO]),

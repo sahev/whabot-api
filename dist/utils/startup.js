@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../entities/index");
 const chats_entities_1 = require("../chats/chats.entities");
 const typeorm_1 = require("typeorm");
-class startupDb {
+class startup {
     async defaultData() {
         await (0, typeorm_1.getConnection)("default")
             .createQueryBuilder()
@@ -17,5 +17,5 @@ class startupDb {
             .execute();
     }
 }
-exports.default = startupDb;
+exports.default = startup;
 //# sourceMappingURL=startup.js.map

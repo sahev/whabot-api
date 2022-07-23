@@ -4,6 +4,12 @@ export default class SessionsController {
     constructor(sessionsServices: SessionsService);
     logout(id: string): Promise<void>;
     getTokenBrowser(data: string): Promise<string | object>;
-    getQrCode(data: any): Promise<void>;
-    getBotStatus(botId: string): Promise<any>;
+    getQrCode(data: any): Promise<{
+        string: {
+            status: any;
+        };
+    }>;
+    getBotStatus(botId: string): Promise<{
+        status: any;
+    }>;
 }

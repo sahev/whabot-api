@@ -1,10 +1,11 @@
-import { Injectable, BadRequestException } from "@nestjs/common";
+import { Injectable, BadRequestException, InternalServerErrorException, HttpStatus } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CampaignHistory, Messages } from "../entities/index";
 import { Like, Repository } from "typeorm";
 import { CampaignHistoryDTO, MessagesDTO } from "./messagesDTO";
 import { Utils } from "../utils/utils";
 import { Whatsapp } from "venom-bot";
+import { formatPhone, getSession, isExists, sendMessage, status } from "src/sessions/sessions.service";
 
 @Injectable()
 export class MessagesService {
@@ -82,46 +83,35 @@ export class MessagesService {
           this.formatNumber(sendMessagesDto.columnSheet[index][0]),
           formatedMessage
         );
-
-
     }
-
     console.log('Quantidade de mensagens processadas: ', sendMessagesDto.columnSheet.length);
-    
   }
   async execute(client: any[], botId: number, phoneNumber: string, message: string): Promise<any> {
     let response = {};
     var sendedmessage = new CampaignHistoryDTO;
 
-    try {
-
-      await client
-        // @ts-ignore
-        .sendText("55" + phoneNumber + "@c.us", message)
-        .then((result) => {
-          response = result;
-          sendedmessage.cah_bot = botId;
-          sendedmessage.cah_to = result.to.remote.user;
-          sendedmessage.cah_message = result.text;
-          sendedmessage.cah_erro = false;
-        })
-        .catch((erro) => {
-          sendedmessage.cah_bot = botId;
-          sendedmessage.cah_to = erro.to.replace('@c.us', '');
-          sendedmessage.cah_message = message;
-          sendedmessage.cah_messageerror = erro.text;
-          sendedmessage.cah_erro = true;
-        });
-        
-      this.setSendedMessage(sendedmessage);
-      return response;
-
-    } catch {
-      return new BadRequestException(
-        "Bot not started or not found"
-      ).getResponse();
+    const data = {
+      sessionId: botId,
+      receiver: phoneNumber,
+      message: {
+        text: message
+      },
+      delaySeconds: 3
     }
 
+    console.log(data);
+    
+    var res = await this.sendMessage(data).then(async (result) => {      
+          response = result;
+          sendedmessage.cah_bot = data.sessionId;
+          sendedmessage.cah_to = data.receiver;
+          sendedmessage.cah_message = data.message.text;
+          sendedmessage.cah_erro = result.message.startsWith("The receiver number");
+          sendedmessage.cah_messageerror = result.message;
+        });
+
+    console.log(res, 'res send message');
+    this.setSendedMessage(sendedmessage);
   }
 
   formatNumber(number: number) {
@@ -137,5 +127,29 @@ export class MessagesService {
 
   setSendedMessage(message: CampaignHistoryDTO) {
     this.campaignHistoryRepository.save(message)
+  }
+
+  async sendMessage(data) {
+    const session = getSession(data.sessionId)
+    const receiver = formatPhone(data.receiver)
+    const message = data.message;
+    const botStatus = await status(data.sessionId)
+    const delayMs = data.delaySeconds * 1000;
+
+    try {
+        const exists = await isExists(session, receiver)
+        
+        if (botStatus.status == "disconnected")
+          return new BadRequestException('The sessionId is disconnected or not exists.')
+
+        if (!exists)
+          return new BadRequestException('The receiver number is not exists.')
+
+        await sendMessage(session, receiver, message, delayMs)
+
+        return { status: HttpStatus.OK, message: 'The message has been successfully sent.' }
+    } catch (ex) {
+        return new InternalServerErrorException(ex, 'Failed to send the message.')
+    }
   }
 }

@@ -19,6 +19,7 @@ const index_1 = require("../entities/index");
 const typeorm_2 = require("typeorm");
 const messagesDTO_1 = require("./messagesDTO");
 const utils_1 = require("../utils/utils");
+const sessions_service_1 = require("../sessions/sessions.service");
 let MessagesService = class MessagesService {
     constructor(messagesRepository, campaignHistoryRepository) {
         this.messagesRepository = messagesRepository;
@@ -79,29 +80,25 @@ let MessagesService = class MessagesService {
     async execute(client, botId, phoneNumber, message) {
         let response = {};
         var sendedmessage = new messagesDTO_1.CampaignHistoryDTO;
-        try {
-            await client
-                .sendText("55" + phoneNumber + "@c.us", message)
-                .then((result) => {
-                response = result;
-                sendedmessage.cah_bot = botId;
-                sendedmessage.cah_to = result.to.remote.user;
-                sendedmessage.cah_message = result.text;
-                sendedmessage.cah_erro = false;
-            })
-                .catch((erro) => {
-                sendedmessage.cah_bot = botId;
-                sendedmessage.cah_to = erro.to.replace('@c.us', '');
-                sendedmessage.cah_message = message;
-                sendedmessage.cah_messageerror = erro.text;
-                sendedmessage.cah_erro = true;
-            });
-            this.setSendedMessage(sendedmessage);
-            return response;
-        }
-        catch (_a) {
-            return new common_1.BadRequestException("Bot not started or not found").getResponse();
-        }
+        const data = {
+            sessionId: botId,
+            receiver: phoneNumber,
+            message: {
+                text: message
+            },
+            delaySeconds: 3
+        };
+        console.log(data);
+        var res = await this.sendMessage(data).then(async (result) => {
+            response = result;
+            sendedmessage.cah_bot = data.sessionId;
+            sendedmessage.cah_to = data.receiver;
+            sendedmessage.cah_message = data.message.text;
+            sendedmessage.cah_erro = result.message.startsWith("The receiver number");
+            sendedmessage.cah_messageerror = result.message;
+        });
+        console.log(res, 'res send message');
+        this.setSendedMessage(sendedmessage);
     }
     formatNumber(number) {
         if (number)
@@ -114,6 +111,25 @@ let MessagesService = class MessagesService {
     }
     setSendedMessage(message) {
         this.campaignHistoryRepository.save(message);
+    }
+    async sendMessage(data) {
+        const session = (0, sessions_service_1.getSession)(data.sessionId);
+        const receiver = (0, sessions_service_1.formatPhone)(data.receiver);
+        const message = data.message;
+        const botStatus = await (0, sessions_service_1.status)(data.sessionId);
+        const delayMs = data.delaySeconds * 1000;
+        try {
+            const exists = await (0, sessions_service_1.isExists)(session, receiver);
+            if (botStatus.status == "disconnected")
+                return new common_1.BadRequestException('The sessionId is disconnected or not exists.');
+            if (!exists)
+                return new common_1.BadRequestException('The receiver number is not exists.');
+            await (0, sessions_service_1.sendMessage)(session, receiver, message, delayMs);
+            return { status: common_1.HttpStatus.OK, message: 'The message has been successfully sent.' };
+        }
+        catch (ex) {
+            return new common_1.InternalServerErrorException(ex, 'Failed to send the message.');
+        }
     }
 };
 MessagesService = __decorate([

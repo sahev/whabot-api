@@ -1,4 +1,4 @@
-declare class startupDb {
+declare class startup {
     defaultData(): Promise<void>;
 }
-export default startupDb;
+export default startup;

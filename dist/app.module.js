@@ -15,6 +15,7 @@ const index_1 = require("./entities/index");
 const messages_module_1 = require("./messages/messages.module");
 const bots_module_1 = require("./bots/bots.module");
 const chats_module_1 = require("./chats/chats.module");
+const queue_module_1 = require("./messagequeue/queue.module");
 const socket_module_1 = require("./socket/socket.module");
 const workflows_module_1 = require("./flows/workflows/workflows.module");
 const stages_module_1 = require("./flows/stages/stages.module");
@@ -29,6 +30,10 @@ const stages_entities_1 = require("./flows/stages/stages.entities");
 const conditionals_entities_1 = require("./flows/conditionals/conditionals.entities");
 const wordkeys_entities_1 = require("./flows/wordkeys/wordkeys.entities");
 const chats_entities_1 = require("./chats/chats.entities");
+const documents_entities_1 = require("./nlp/documents/documents.entities");
+const responses_entities_1 = require("./nlp/responses/responses.entities");
+const documents_module_1 = require("./nlp/documents/documents.module");
+const responses_module_1 = require("./nlp/responses/responses.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -47,6 +52,9 @@ AppModule = __decorate([
             funds_module_1.FundsModule,
             links_module_1.LinksModule,
             templates_module_1.TemplatesModule,
+            queue_module_1.QueueModule,
+            documents_module_1.DocumentsModule,
+            responses_module_1.ResponsesModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'mysql',
                 host: 'localhost',
@@ -55,7 +63,7 @@ AppModule = __decorate([
                 password: 'password',
                 database: 'whabot',
                 charset: "utf8mb4_unicode_ci",
-                entities: [index_1.Templates, index_1.CampaignHistory, index_1.Users, index_1.Sessions, index_1.Messages, index_1.Bots, chats_entities_1.Chats, workflows_entities_1.Workflows, stages_entities_1.Stages, conditionals_entities_1.Conditionals, wordkeys_entities_1.WordKeys, links_entities_1.Links],
+                entities: [documents_entities_1.Documents, responses_entities_1.Responses, index_1.Templates, index_1.CampaignHistory, index_1.Users, index_1.Sessions, index_1.Messages, index_1.Bots, chats_entities_1.Chats, workflows_entities_1.Workflows, stages_entities_1.Stages, conditionals_entities_1.Conditionals, wordkeys_entities_1.WordKeys, links_entities_1.Links],
                 synchronize: true,
                 migrations: ["src/database/migrations/*.ts"],
             }),

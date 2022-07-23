@@ -47,7 +47,9 @@ let FundsService = class FundsService {
     async createFundObj(fund) {
         try {
             const html = await axios_1.default.get(`https://fiis.com.br/${fund}/`);
+            console.log(html, 'htmlllll');
             let $ = cheerio.load(html.data);
+            console.log($, '$$$$$$$$');
             return {
                 ticker: $(funds_struct_1.default.ticker).text(),
                 dividend_yield: $(funds_struct_1.default.dividend_yield).text(),

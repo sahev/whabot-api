@@ -1,0 +1,543 @@
+{
+  "settings": {
+    "languages": [
+      "pt"
+    ],
+    "forceNER": true,
+    "tag": "nlp",
+    "threshold": 0.5,
+    "autoLoad": true,
+    "autoSave": true,
+    "modelFileName": "model.nlp",
+    "calculateSentiment": true
+  },
+  "nluManager": {
+    "settings": {
+      "tag": "nlu-manager"
+    },
+    "locales": [
+      "pt"
+    ],
+    "languageNames": {},
+    "domainManagers": {
+      "pt": {
+        "settings": {
+          "locale": "pt",
+          "trainByDomain": false,
+          "tag": "domain-manager-pt",
+          "nluByDomain": {
+            "default": {
+              "className": "NeuralNlu",
+              "settings": {}
+            }
+          },
+          "useStemDict": true
+        },
+        "stemDict": {
+          "oi": {
+            "intent": "saudacao",
+            "domain": "default"
+          },
+          "ola": {
+            "intent": "saudacao",
+            "domain": "default"
+          },
+          "bom,dia": {
+            "intent": "saudacao",
+            "domain": "default"
+          },
+          "boa,tard": {
+            "intent": "saudacao",
+            "domain": "default"
+          },
+          "boa,noit": {
+            "intent": "saudacao",
+            "domain": "default"
+          },
+          "blz,eai": {
+            "intent": "saudacao",
+            "domain": "default"
+          },
+          "eae": {
+            "intent": "saudacao",
+            "domain": "default"
+          },
+          "bem,tud": {
+            "intent": "tudobem",
+            "domain": "default"
+          },
+          "com,vai": {
+            "intent": "saudacao",
+            "domain": "default"
+          },
+          "ai,bem,por,tud": {
+            "intent": "tudobem",
+            "domain": "default"
+          },
+          "blz": {
+            "intent": "tudobem",
+            "domain": "default"
+          },
+          "anos,quant,tem,voc": {
+            "intent": "sobre.idade",
+            "domain": "default"
+          },
+          "idad,qual,sua": {
+            "intent": "sobre.idade",
+            "domain": "default"
+          }
+        },
+        "intentDict": {
+          "saudacao": "default",
+          "tudobem": "default",
+          "sobre.idade": "default"
+        },
+        "sentences": [
+          {
+            "domain": "default",
+            "utterance": "oi",
+            "intent": "saudacao"
+          },
+          {
+            "domain": "default",
+            "utterance": "olá",
+            "intent": "saudacao"
+          },
+          {
+            "domain": "default",
+            "utterance": "bom dia",
+            "intent": "saudacao"
+          },
+          {
+            "domain": "default",
+            "utterance": "boa tarde",
+            "intent": "saudacao"
+          },
+          {
+            "domain": "default",
+            "utterance": "boa noite",
+            "intent": "saudacao"
+          },
+          {
+            "domain": "default",
+            "utterance": "eai blz",
+            "intent": "saudacao"
+          },
+          {
+            "domain": "default",
+            "utterance": "eae",
+            "intent": "saudacao"
+          },
+          {
+            "domain": "default",
+            "utterance": "tudo bem?",
+            "intent": "tudobem"
+          },
+          {
+            "domain": "default",
+            "utterance": "como vai",
+            "intent": "saudacao"
+          },
+          {
+            "domain": "default",
+            "utterance": "tudo bem por ai?",
+            "intent": "tudobem"
+          },
+          {
+            "domain": "default",
+            "utterance": "blz?",
+            "intent": "tudobem"
+          },
+          {
+            "domain": "default",
+            "utterance": "quantos anos voce tem",
+            "intent": "sobre.idade"
+          },
+          {
+            "domain": "default",
+            "utterance": "qual sua idade",
+            "intent": "sobre.idade"
+          }
+        ],
+        "domains": {
+          "master_domain": {
+            "settings": {
+              "locale": "pt",
+              "tag": "nlu-pt",
+              "keepStopwords": true,
+              "nonefeatureValue": 1,
+              "nonedeltaMultiplier": 1.2,
+              "spellCheck": false,
+              "spellCheckDistance": 1,
+              "filterZeros": true,
+              "log": true
+            },
+            "features": {
+              "oi": 1,
+              "ola": 1,
+              "bom": 1,
+              "dia": 1,
+              "boa": 1,
+              "tard": 1,
+              "noit": 1,
+              "eai": 1,
+              "blz": 1,
+              "eae": 1,
+              "tud": 1,
+              "bem": 1,
+              "com": 1,
+              "vai": 1,
+              "por": 1,
+              "ai": 1,
+              "quant": 1,
+              "anos": 1,
+              "voc": 1,
+              "tem": 1,
+              "qual": 1,
+              "sua": 1,
+              "idad": 1
+            },
+            "intents": {
+              "saudacao": 1,
+              "tudobem": 1,
+              "sobre.idade": 1
+            },
+            "intentFeatures": {
+              "saudacao": {
+                "oi": 1,
+                "ola": 1,
+                "bom": 1,
+                "dia": 1,
+                "boa": 1,
+                "tard": 1,
+                "noit": 1,
+                "eai": 1,
+                "blz": 1,
+                "eae": 1,
+                "com": 1,
+                "vai": 1
+              },
+              "tudobem": {
+                "tud": 1,
+                "bem": 1,
+                "por": 1,
+                "ai": 1,
+                "blz": 1
+              },
+              "sobre.idade": {
+                "quant": 1,
+                "anos": 1,
+                "voc": 1,
+                "tem": 1,
+                "qual": 1,
+                "sua": 1,
+                "idad": 1
+              }
+            },
+            "featuresToIntent": {
+              "oi": [
+                "saudacao"
+              ],
+              "ola": [
+                "saudacao"
+              ],
+              "bom": [
+                "saudacao"
+              ],
+              "dia": [
+                "saudacao"
+              ],
+              "boa": [
+                "saudacao"
+              ],
+              "tard": [
+                "saudacao"
+              ],
+              "noit": [
+                "saudacao"
+              ],
+              "eai": [
+                "saudacao"
+              ],
+              "blz": [
+                "saudacao",
+                "tudobem"
+              ],
+              "eae": [
+                "saudacao"
+              ],
+              "com": [
+                "saudacao"
+              ],
+              "vai": [
+                "saudacao"
+              ],
+              "tud": [
+                "tudobem"
+              ],
+              "bem": [
+                "tudobem"
+              ],
+              "por": [
+                "tudobem"
+              ],
+              "ai": [
+                "tudobem"
+              ],
+              "quant": [
+                "sobre.idade"
+              ],
+              "anos": [
+                "sobre.idade"
+              ],
+              "voc": [
+                "sobre.idade"
+              ],
+              "tem": [
+                "sobre.idade"
+              ],
+              "qual": [
+                "sobre.idade"
+              ],
+              "sua": [
+                "sobre.idade"
+              ],
+              "idad": [
+                "sobre.idade"
+              ]
+            },
+            "neuralNetwork": {
+              "settings": {
+                "locale": "pt",
+                "tag": "nlu-pt",
+                "keepStopwords": true,
+                "nonefeatureValue": 1,
+                "nonedeltaMultiplier": 1.2,
+                "spellCheck": false,
+                "spellCheckDistance": 1,
+                "filterZeros": true,
+                "log": true
+              },
+              "features": [
+                "oi",
+                "ola",
+                "bom",
+                "dia",
+                "boa",
+                "tard",
+                "noit",
+                "eai",
+                "blz",
+                "eae",
+                "tud",
+                "bem",
+                "com",
+                "vai",
+                "por",
+                "ai",
+                "quant",
+                "anos",
+                "voc",
+                "tem",
+                "qual",
+                "sua",
+                "idad"
+              ],
+              "intents": [
+                "saudacao",
+                "tudobem",
+                "sobre.idade"
+              ],
+              "perceptrons": [
+                [
+                  6.662735939025879,
+                  6.661559581756592,
+                  3.3364264965057373,
+                  3.3364264965057373,
+                  4.45015287399292,
+                  2.225342273712158,
+                  2.224414587020874,
+                  13.74927806854248,
+                  -7.285896301269531,
+                  6.645055294036865,
+                  -4.003912925720215,
+                  -4.003912925720215,
+                  3.3301658630371094,
+                  3.3301658630371094,
+                  -1.0713735818862915,
+                  -1.0713735818862915,
+                  -1.962676763534546,
+                  -1.962676763534546,
+                  -1.962676763534546,
+                  -1.962676763534546,
+                  -2.614332675933838,
+                  -2.614332675933838,
+                  -2.614332675933838,
+                  7.603877755977256
+                ],
+                [
+                  -2.4018654823303223,
+                  -2.4005672931671143,
+                  -1.2060041427612305,
+                  -1.2060041427612305,
+                  -1.609580636024475,
+                  -0.8050639033317566,
+                  -0.8041260242462158,
+                  -13.676750183105469,
+                  11.502752304077148,
+                  -2.3822262287139893,
+                  5.943408966064453,
+                  5.943408966064453,
+                  -1.1988472938537598,
+                  -1.1988472938537598,
+                  -0.003991774749010801,
+                  -0.003991774749010801,
+                  -0.6047775149345398,
+                  -0.6047775149345398,
+                  -0.6047775149345398,
+                  -0.6047775149345398,
+                  -0.8059412240982056,
+                  -0.8059412240982056,
+                  -0.8059412240982056,
+                  2.4209412131052943
+                ],
+                [
+                  -0.8865669965744019,
+                  -0.8792645335197449,
+                  -0.5577405095100403,
+                  -0.5577405095100403,
+                  -0.822538435459137,
+                  -0.41047215461730957,
+                  -0.36978229880332947,
+                  -0.39802977442741394,
+                  -0.9128652215003967,
+                  -0.875135600566864,
+                  -0.5562462210655212,
+                  -0.5562462210655212,
+                  -0.5103710889816284,
+                  -0.5103710889816284,
+                  -0.17152182757854462,
+                  -0.17152182757854462,
+                  3.3526437282562256,
+                  3.3526437282562256,
+                  3.3526437282562256,
+                  3.3526437282562256,
+                  4.47019100189209,
+                  4.47019100189209,
+                  4.47019100189209,
+                  0.8751384269742118
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "intentDomains": {},
+    "extraSentences": [
+      [
+        "pt",
+        "oi"
+      ],
+      [
+        "pt",
+        "olá"
+      ],
+      [
+        "pt",
+        "bom dia"
+      ],
+      [
+        "pt",
+        "boa tarde"
+      ],
+      [
+        "pt",
+        "boa noite"
+      ],
+      [
+        "pt",
+        "eai blz"
+      ],
+      [
+        "pt",
+        "eae"
+      ],
+      [
+        "pt",
+        "tudo bem?"
+      ],
+      [
+        "pt",
+        "como vai"
+      ],
+      [
+        "pt",
+        "tudo bem por ai?"
+      ],
+      [
+        "pt",
+        "blz?"
+      ],
+      [
+        "pt",
+        "quantos anos voce tem"
+      ],
+      [
+        "pt",
+        "qual sua idade"
+      ]
+    ]
+  },
+  "ner": {
+    "settings": {
+      "tag": "ner",
+      "entityPreffix": "%",
+      "entitySuffix": "%"
+    },
+    "rules": {}
+  },
+  "nlgManager": {
+    "settings": {
+      "tag": "nlg-manager"
+    },
+    "responses": {
+      "pt": {
+        "saudacao": [
+          {
+            "answer": "olá, tudo bem com você?,"
+          },
+          {
+            "answer": "olá! sou atendente virtual, pode me chamar de luci!\r\n\r\ntudo bem com voce?"
+          },
+          {
+            "answer": "oi {{variavel}} tudo bem com voce?"
+          }
+        ],
+        "tudobem": [
+          {
+            "answer": "estou bem, obrigado!"
+          },
+          {
+            "answer": "tudo ótimo, obrigado!"
+          }
+        ],
+        "sobre.idade": [
+          {
+            "answer": "eu venho de um ano não tão distante"
+          },
+          {
+            "answer": "tenho poucos dias"
+          }
+        ]
+      }
+    }
+  },
+  "actionManager": {
+    "settings": {
+      "tag": "action-manager"
+    },
+    "actions": {}
+  },
+  "slotManager": {}
+}

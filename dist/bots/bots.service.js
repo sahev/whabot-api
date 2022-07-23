@@ -60,9 +60,11 @@ let BotsServices = class BotsServices {
         });
     }
     async botInit(client, botId) {
+        console.log(client, 'ouvindo');
         client.onMessage(async (message) => {
+            console.log(message, 'ouvindo');
             let bot = await this.botsRepository.findOne({ bot_bot: botId });
-            if (!message.isGroupMsg && message.chatId == '5511981568415@c.us' || message.chatId == '5511997035927@c.us' || message.chatId == '5511970606771@c.us') {
+            if (!message.isGroupMsg && message.chatId == '5511981568415@c.us' || message.chatId == '5511981242352@c.us' || message.chatId == '5511997035927@c.us' || message.chatId == '5511970606771@c.us') {
                 switch (bot.bot_type) {
                     case 1:
                         console.log('origem: ', message.from, 'destino: ', message.to, 'receive message: ', message.body);
@@ -80,6 +82,7 @@ let BotsServices = class BotsServices {
                 }
             }
         });
+        return;
     }
     async getBotId(name) {
         return await (0, typeorm_2.getManager)()

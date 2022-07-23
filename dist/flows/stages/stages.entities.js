@@ -38,6 +38,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Stages.prototype, "y", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Stages.prototype, "parent", void 0);
 Stages = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.Unique)(['type', 'workflow'])
